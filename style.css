@@ -471,3 +471,183 @@ footer {
         font-size: 1.3rem;
     }
 }
+/* =========================
+   PRODUCT POPUP MODAL
+========================= */
+#product-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+.modal-box {
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    animation: modalPop .25s ease-out;
+}
+
+/* Image style */
+.modal-box img {
+    width: 100%;
+    border-radius: 14px;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Product Title */
+.modal-box h2 {
+    font-size: 1.6rem;
+    margin-top: 12px;
+    font-weight: 700;
+}
+
+/* Description */
+#modal-desc {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 8px;
+}
+
+/* Price */
+#modal-price {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #d32f2f;
+    margin-top: 12px;
+}
+
+/* Add to Cart Button */
+#modal-add-cart {
+    width: 100%;
+    padding: 12px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 16px;
+    transition: 0.25s;
+}
+
+#modal-add-cart:hover {
+    background: #b91c1c;
+}
+
+/* Close button */
+#modal-close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    float: right;
+}
+
+/* Animation */
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+/* ========================= */
+/* PRODUCT MODAL STYLES */
+/* ========================= */
+.product-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close-btn:hover {
+    background: #f8f8f8;
+    transform: rotate(90deg);
+}
+
+.modal-product-details {
+    padding: 40px;
+}
+
+.modal-loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.modal-loading .fa-spinner {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #d32f2f;
+}
+
+

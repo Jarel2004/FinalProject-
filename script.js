@@ -234,3 +234,8 @@ document.getElementById("profile-toggle").addEventListener("click", () => {
 document.querySelector(".close-profile").addEventListener("click", () => {
     document.getElementById("profile-sidebar").classList.remove("open");
 });
+
+document.getElementById("cart-button").addEventListener("click", function() {
+    window.location.href = "cart/cart.html";
+});
+
