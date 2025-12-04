@@ -21,7 +21,7 @@ body {
     padding: 20px;
 }
 
-/* Main container should expand to fill space */
+
 .main-container {
     flex: 1;
     margin: 125px 2rem 2rem 2rem;
@@ -31,9 +31,7 @@ body {
     min-height: calc(100vh - 125px - 4rem);
 }
 
-/* ========================= */
-/* UPDATED HEADER STYLES TO MATCH SCRIPT.CSS */
-/* ========================= */
+
 header {
     position: fixed;
     width: 100%;
@@ -72,7 +70,7 @@ header .logo h1 {
     margin: 0;
 }
 
-/* Restaurant Info Bar */
+
 .restaurant-info {
     display: flex;
     gap: 15px;
@@ -94,9 +92,7 @@ header .logo h1 {
     font-size: 1.1rem;
 }
 
-/* ========================= */
-/* NAV ICONS */
-/* ========================= */
+
 .nav-icons {
     display: flex;
     align-items: center;
@@ -176,12 +172,12 @@ header .logo h1 {
     font-size: 1rem;
 }
 
-/* Remove old header styles */
+
 .header {
     display: none;
 }
 
-/* Cart page section should fill available space */
+
 .cart-page-section {
     width: 100%;
     flex: 1;
@@ -202,7 +198,7 @@ header .logo h1 {
     color: #d32f2f;
 }
 
-/* Cart page container should expand */
+
 .cart-page-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -491,7 +487,7 @@ header .logo h1 {
     transform: translateY(-2px);
 }
 
-/* Footer should stay at bottom */
+
 .footer {
     text-align: center;
     padding: 25px;
@@ -501,9 +497,7 @@ header .logo h1 {
     font-size: 0.9rem;
 }
 
-/* ========================= */
-/* PROFILE SIDEBAR STYLES    */
-/* ========================= */
+
 .profile-sidebar {
     position: fixed;
     top: 0;
@@ -680,7 +674,7 @@ header .logo h1 {
     background-color: #e0e0e0;
 }
 
-/* Overlay for sidebar */
+
 .profile-overlay {
     display: none;
     position: fixed;
@@ -696,7 +690,7 @@ header .logo h1 {
     display: block;
 }
 
-/* Modal Styles */
+
 .modal {
     display: none;
     position: fixed;
@@ -981,7 +975,7 @@ header .logo h1 {
 .order-item:nth-child(4) { animation-delay: 0.4s; }
 .order-item:nth-child(5) { animation-delay: 0.5s; }
 
-/* Responsive Design */
+
 @media (max-width: 1100px) {
     .restaurant-info {
         flex-direction: column;
@@ -1135,7 +1129,7 @@ header .logo h1 {
     }
 }
 
-/* For larger screens */
+
 @media (min-width: 1400px) {
     .main-container {
         margin: 125px auto 2rem auto;
@@ -1144,7 +1138,7 @@ header .logo h1 {
     }
 }
 
-/* For very short screens */
+
 @media (max-height: 700px) {
     .cart-items-container {
         min-height: 300px;

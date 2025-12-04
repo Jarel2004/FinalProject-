@@ -99,9 +99,6 @@ function updateCartPage() {
                 <i class="fas fa-shopping-basket"></i>
                 <p>Your cart is empty</p>
                 <p>Add some delicious Korean food from our menu!</p>
-                <a href="index.html" class="cart-btn checkout-btn" style="margin-top: 20px; text-decoration: none;">
-                    <i class="fas fa-store"></i> Browse Menu
-                </a>
             </div>
         `;
     } else {
