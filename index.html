@@ -38,10 +38,11 @@
 
             <!-- Cart Button -->
             <div class="btns">
-                <button id="cart-button" class="cart-circle">
+                <button id="cart-button" class="cart-circle" onclick="window.location.href='./cart/cart.html'">
                     <i class="fas fa-shopping-bag"></i>
                     <span id="cart-count">0</span>
                 </button>
+
                 <!-- Profile Button -->
                 <button id="profile-toggle" class="profile-circle">
                     <i class="fas fa-user"></i>
@@ -587,29 +588,11 @@ function initializeCartButton() {
     const cartButton = document.getElementById("cart-button");
     if (cartButton) {
         cartButton.addEventListener("click", function() {
-            const cart = getCart();
-            if (cart.length === 0) {
-                showToast("⚠️ Your cart is empty!");
-                return;
-            }
-            
-            let message = "🛒 Cart Items:\n\n";
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                message += `• ${item.name} x${item.quantity} – ₱${itemTotal.toFixed(2)}\n`;
-                if (item.addons && item.addons.length > 0) {
-                    item.addons.forEach(addon => {
-                        message += `  + ${addon.name} (₱${addon.price})\n`;
-                    });
-                }
-            });
-            message += `\n💰 Total: ₱${total.toFixed(2)}`;
-            alert(message);
+            window.location.href = "./cart/cart.html";
         });
     }
 }
+
 
 // ===========================
 // INITIALIZE ON PAGE LOAD
