@@ -1,30 +1,3 @@
-
-What can I help you with today?
-
-
-Session limit reached ∙ resets 5:00 PM
-Upgrade
-this is my index.html and a modal html, update the index.html that if the user clicked any of those product the modal will appear or should I say pop up with fade in animation
-
-
-
-
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>K-Foods Restaurant - Korean Delights</title> <!-- ICONS + CSS --> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/l
-
-pasted
-
-
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>K-Foods | Bibimbap</title> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-pasted
-
-
-
-4.90 KB •165 lines
-•
-Formatting may be inconsistent from source
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,56 +12,51 @@ Formatting may be inconsistent from source
 
 <body>
 
-    <!-- ========================= -->
-    <!-- HEADER -->
-    <!-- ========================= -->
-
     <header>
         <div class="logo">
-            <img src="logg.png" class="brand-logo" />
-            <h1>Karu-mata</h1>
-        </div>
+                    <img src="logg.png" class="brand-logo" />
+                    <h1>Karu-mata</h1>
 
-        <!-- RIGHT SIDE ICONS -->
-        <div class="nav-icons">
-
-            <div class="restaurant-info">
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <span>Open: 10:00 AM – 9:00 PM</span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-bolt"></i>
-                    <span>Meals ready in 15-20 minutes</span>
+
+                <!-- RIGHT SIDE ICONS -->
+                <div class="nav-icons">
+
+                    <div class="restaurant-info">
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Open: 10:00 AM – 9:00 PM</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>Meals ready in 15-20 minutes</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-motorcycle"></i>
+                            <span>Delivery available</span>
+                        </div>
+                    </div>
+
+                    
+
+                    <!-- Cart Button -->
+                    <div class="btns">
+
+                        <button id="cart-button" class="cart-circle">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span id="cart-count">0</span>
+                        </button>
+                        <!-- Profile Button -->
+                        <button id="profile-toggle" class="profile-circle">
+                            <i class="fas fa-user"></i>
+                        </button>
+                    </div>
+
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-motorcycle"></i>
-                    <span>Delivery available</span>
-                </div>
-            </div>
 
-            <!-- Buttons (Cart + Profile) -->
-            <div class="btns">
-                <button id="cart-button" class="cart-circle">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span id="cart-count">0</span>
-                </button>
-
-                <button id="profile-toggle" class="profile-circle">
-                    <i class="fas fa-user"></i>
-                </button>
-            </div>
-
-        </div>
     </header>
 
-
-
-
-    <!-- ========================= -->
-    <!-- FILTER SECTION -->
-    <!-- ========================= -->
-
+   <!-- FILTER SECTION -->
     <div class="main-container">
         <div class="filter-section">
             <h2 class="filter-title"><i class="fas fa-filter"></i> Filter by Category</h2>
@@ -99,9 +67,10 @@ Formatting may be inconsistent from source
                 <button class="filter-btn" data-filter="sushi">Sushi</button>
                 <button class="filter-btn" data-filter="sizzling">Sizzling</button>
             </div>
+
         </div>
 
-        <!-- PRODUCT GRID -->
+        <!-- PRODUCT SECTION -->
         <div class="content-wrapper">
             <div class="products-section">
                 <h2 class="section-title"><i class="fas fa-store"></i> Korean Delights</h2>
@@ -114,23 +83,19 @@ Formatting may be inconsistent from source
     </div>
 
 
-
-
-    <!-- ========================= -->
-    <!-- FOOTER -->
-    <!-- ========================= -->
-
     <footer>
-        <p>© 2023 K-Foods Restaurant. All rights reserved.</p>
-        <p>Experience authentic Korean flavors made with passion and tradition.</p>
+        
+            <p>© 2023 K-Foods Restaurant. All rights reserved.</p>
+            <p>Experience authentic Korean flavors made with passion and tradition.</p>
+    
+
     </footer>
+    
 
 
-
-
-    <!-- ========================= -->
+    <!-- ============================= -->
     <!-- PROFILE SIDEBAR (Slide Right) -->
-    <!-- ========================= -->
+    <!-- ============================= -->
 
     <div id="profile-sidebar" class="profile-sidebar">
 
@@ -172,6 +137,7 @@ Formatting may be inconsistent from source
                     <p>Order #KFD069561 — 1 item</p>
                     <span>P140</span>
                 </div>
+
             </div>
         </div>
 
@@ -182,10 +148,8 @@ Formatting may be inconsistent from source
     </div>
 
 
-
-
-    <!-- JS FILE -->
+    <!-- JAVASCRIPT -->
     <script src="script.js"></script>
-
 </body>
 </html>
+
