@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karu-mata - Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>K-Foods Restaurant</h1>
+                </div>
+                <div class="restaurant-info">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Open: 10:00 AM – 9:00 PM</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>Meals ready in 15-20 minutes</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-motorcycle"></i>
+                        <span>Delivery available</span>
+                    </div>
+                    <div class="info-item cart-item">
+                        <a href="index.html" class="back-to-menu-btn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back to Menu</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container main-container">
+        <div class="cart-page-section">
+            <h2 class="section-title"><i class="fas fa-shopping-cart"></i>Your Shopping Cart</h2>
+            
+            <div class="cart-page-container">
+                <div class="cart-items-container">
+                    <div class="cart-items-header">
+                        <h3>Items in Your Cart</h3>
+                        <div class="cart-count-badge" id="cart-page-count">0 items</div>
+                    </div>
+                    
+                    <div class="cart-items-list" id="cart-page-items">
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-basket"></i>
+                            <p>Your cart is empty</p>
+                            <p>Add some delicious Korean food from our menu!</p>
+                            <a href="index.html" class="cart-btn checkout-btn" style="margin-top: 20px; text-decoration: none;">
+                                <i class="fas fa-store"></i> Browse Menu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-header">
+                        <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                    </div>
+                    
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">P0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee</span>
+                            <span id="delivery-fee">P50</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Service Fee</span>
+                            <span id="service-fee">P20</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Amount</span>
+                            <span id="cart-total-amount">P0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-info">
+                        <div class="info-box">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Delivery Address</h4>
+                                <p id="delivery-address">No address set yet</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <button class="cart-btn checkout-btn" id="checkout-page-btn">
+                            <i class="fas fa-check-circle"></i> Proceed to Checkout
+                        </button>
+                        <button class="cart-btn clear-cart-btn" id="clear-cart-page-btn">
+                            <i class="fas fa-trash-alt"></i> Clear Cart
+                        </button>
+                        <a href="index.html" class="cart-btn continue-shopping-btn">
+                            <i class="fas fa-utensils"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <p>© 2023 K-Foods Restaurant. All rights reserved.</p>
+            <p>Experience authentic Korean flavors made with passion and tradition.</p>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Order Confirmed!</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="order-summary">
+                    <div class="order-header">
+                        <i class="fas fa-receipt"></i>
+                        <h3>Order Details</h3>
+                    </div>
+                    
+                    <div class="order-items" id="order-items-list"></div>
+                    
+                    <div class="order-total">
+                        <span>Total Amount:</span>
+                        <span class="total-price" id="order-total-price">P0</span>
+                    </div>
+                </div>
+                
+                <div class="order-info">
+                    <div class="info-box">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Preparation Time</h4>
+                            <p>Your food will be ready in <span class="highlight">15-20 minutes</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <i class="fas fa-utensils"></i>
+                        <div>
+                            <h4>Order Number</h4>
+                            <p>#<span id="order-number">00000</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <i class="fas fa-motorcycle"></i>
+                        <div>
+                            <h4>Delivery Status</h4>
+                            <p><span class="highlight">Delivery available</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-message">
+                    <p>Thank you for ordering from <span class="k-foods">K-Foods Restaurant</span>!</p>
+                    <p class="small-text">A confirmation email has been sent to your registered email address.</p>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn track-order-btn">
+                    <i class="fas fa-map-marker-alt"></i> Track Your Order
+                </button>
+                <button class="modal-btn close-btn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>
