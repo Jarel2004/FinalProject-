@@ -10,6 +10,7 @@ body {
     color: #333;
     line-height: 1.6;
     width: 100vw;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -20,10 +21,14 @@ body {
     padding: 20px;
 }
 
+/* Main container should expand to fill space */
 .main-container {
+    flex: 1;
     margin: 125px 2rem 2rem 2rem;
     display: flex;
     flex-direction: column;
+    width: calc(100% - 4rem);
+    min-height: calc(100vh - 125px - 4rem);
 }
 
 /* ========================= */
@@ -41,6 +46,7 @@ header {
     color: white;
     padding: 25px 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 125px;
 }
 
 header .logo {
@@ -175,8 +181,12 @@ header .logo h1 {
     display: none;
 }
 
+/* Cart page section should fill available space */
 .cart-page-section {
     width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-title {
@@ -192,10 +202,12 @@ header .logo h1 {
     color: #d32f2f;
 }
 
+/* Cart page container should expand */
 .cart-page-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
+    flex: 1;
 }
 
 @media (max-width: 992px) {
@@ -204,11 +216,15 @@ header .logo h1 {
     }
 }
 
+/* Cart items container with proper height */
 .cart-items-container {
     background-color: white;
     border-radius: 10px;
     padding: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
 }
 
 .cart-items-header {
@@ -234,8 +250,10 @@ header .logo h1 {
     font-size: 0.9rem;
 }
 
+/* Cart items list should expand */
 .cart-items-list {
-    min-height: 300px;
+    flex: 1;
+    min-height: 200px;
 }
 
 .cart-page-item {
@@ -325,6 +343,11 @@ header .logo h1 {
     text-align: center;
     padding: 60px 0;
     color: #777;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .empty-cart i {
@@ -345,7 +368,9 @@ header .logo h1 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     height: fit-content;
     position: sticky;
-    top: 20px;
+    top: 145px; /* Header height + 20px */
+    display: flex;
+    flex-direction: column;
 }
 
 .summary-header {
@@ -466,10 +491,11 @@ header .logo h1 {
     transform: translateY(-2px);
 }
 
+/* Footer should stay at bottom */
 .footer {
     text-align: center;
     padding: 25px;
-    margin-top: 40px;
+    margin-top: auto;
     background-color: #333;
     color: #aaa;
     font-size: 0.9rem;
@@ -971,6 +997,7 @@ header .logo h1 {
     header {
         flex-wrap: wrap;
         padding: 20px 1rem;
+        height: 150px;
     }
 
     .restaurant-info {
@@ -986,6 +1013,12 @@ header .logo h1 {
 
     .main-container {
         margin: 150px 1rem 1rem 1rem;
+        width: calc(100% - 2rem);
+        min-height: calc(100vh - 150px - 2rem);
+    }
+    
+    .cart-summary {
+        top: 170px; /* Adjusted for smaller header height */
     }
 }
 
@@ -995,6 +1028,7 @@ header .logo h1 {
         gap: 12px;
         text-align: center;
         padding: 15px;
+        height: 180px;
     }
     
     .logo {
@@ -1035,6 +1069,8 @@ header .logo h1 {
     
     .main-container {
         margin: 180px 1rem 1rem 1rem;
+        width: calc(100% - 2rem);
+        min-height: calc(100vh - 180px - 2rem);
     }
     
     .cart-page-item {
@@ -1059,6 +1095,12 @@ header .logo h1 {
     .profile-sidebar.open {
         right: 0;
     }
+    
+    .cart-summary {
+        top: 200px; /* Adjusted for taller header on mobile */
+        position: relative;
+        margin-top: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1081,25 +1123,39 @@ header .logo h1 {
         height: 40px;
     }
     
-    .product-image {
-        height: 180px;
-        overflow: hidden;
-        border-bottom: 1px solid #eee;
+    .main-container {
+        margin: 160px 0.5rem 1rem 0.5rem;
+        width: calc(100% - 1rem);
+        min-height: calc(100vh - 160px - 1.5rem);
     }
     
-    .product-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background: #fff;
-        padding: 5px;
+    .cart-items-container,
+    .cart-summary {
+        padding: 15px;
+    }
+}
+
+/* For larger screens */
+@media (min-width: 1400px) {
+    .main-container {
+        margin: 125px auto 2rem auto;
+        max-width: 1400px;
+        width: calc(100% - 4rem);
+    }
+}
+
+/* For very short screens */
+@media (max-height: 700px) {
+    .cart-items-container {
+        min-height: 300px;
     }
     
-    .product-title {
-        font-size: 1.1rem;
+    .empty-cart {
+        padding: 30px 0;
     }
     
-    .product-price {
-        font-size: 1.3rem;
+    .empty-cart i {
+        font-size: 3rem;
+        margin-bottom: 15px;
     }
 }

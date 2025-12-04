@@ -472,6 +472,12 @@ footer {
     }
 }
 
+<<<<<<< HEAD
+/* =========================
+   PRODUCT POPUP MODAL
+========================= */
+=======
+>>>>>>> 55402a97850bb47f1b863c123c06c2bf01601c6c
 #product-modal {
     position: fixed;
     inset: 0;
@@ -1110,4 +1116,7 @@ footer {
         justify-content: center;
     }
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 55402a97850bb47f1b863c123c06c2bf01601c6c
