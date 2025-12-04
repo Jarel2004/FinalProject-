@@ -392,16 +392,15 @@ document.getElementById("profile-toggle").addEventListener("click", () => {
 document.querySelector(".close-profile").addEventListener("click", () => {
     document.getElementById("profile-sidebar").classList.remove("active");
 });
-
-<<<<<<< HEAD
+x
 document.getElementById("cart-button").addEventListener("click", function() {
     window.location.href = "cart/cart.html";
 });
 
-=======
+
 // ===========================
 // INITIALIZE
 // ===========================
 renderProducts();
 updateCartCount();
->>>>>>> 6ae103179c4d4f57676dc4d2761207921c43ebbe
+
