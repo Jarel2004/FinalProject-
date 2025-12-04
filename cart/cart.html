@@ -8,36 +8,43 @@
     <link rel="stylesheet" href="cart.css">
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <span class="logo-text">Karu-mata</span>
-                    <div class="logo-icon"><img src="karumata.png" alt="Logo"></div>
+    <header>
+        <div class="logo">
+            <img src="logg.png" class="brand-logo" alt="Karu-mata Logo" />
+            <h1>Karu-mata</h1>
+        </div>
+
+        <!-- RIGHT SIDE ICONS -->
+        <div class="nav-icons">
+            <div class="restaurant-info">
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Open: 10:00 AM – 9:00 PM</span>
                 </div>
-                <div class="restaurant-info">
-                    <div class="info-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Open: 10:00 AM – 9:00 PM</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-bolt"></i>
-                        <span>Meals ready in 15-20 minutes</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-motorcycle"></i>
-                        <span>Delivery available</span>
-                    </div>
-                    <div class="info-item cart-item">
-                        <a href="/index.html" class="back-to-menu-btn">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Back to Menu</span>
-                        </a>
-                    </div>
+                <div class="info-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Meals ready in 15-20 minutes</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Delivery available</span>
                 </div>
             </div>
+
+            <div class="btns">
+                <!-- BACK TO MENU button with text -->
+                <a href="index.html" class="back-to-menu-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Menu</span>
+                </a>
+                
+                <!-- Profile button -->
+                <button id="profile-toggle" class="profile-circle">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
         </div>
-    </div>
+    </header>
     
     <div class="container main-container">
         <div class="cart-page-section">
@@ -183,6 +190,51 @@
                     <i class="fas fa-times"></i> Close
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- PROFILE SIDEBAR (Slide Right) -->
+    <!-- ============================= -->
+    <div id="profile-sidebar" class="profile-sidebar">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <div class="profile-info">
+                <h3 class="profile-name">Welcome, Guest!</h3>
+                <p class="profile-email">guest@kfoods.com</p>
+                <button class="login-btn">Sign In / Register</button>
+            </div>
+
+            <button class="close-profile">&times;</button>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-section">
+                <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
+                <p class="current-address">123 Main Street, Barangay 1, Manila 1000</p>
+                <button class="manage-address-btn">
+                    <i class="fas fa-edit"></i> Manage Addresses
+                </button>
+            </div>
+
+            <div class="profile-section">
+                <h4><i class="fas fa-history"></i> Order History</h4>
+                <div class="order-item">
+                    <p>Order #KFD235293 — 1 item</p>
+                    <span>P140</span>
+                </div>
+                <div class="order-item">
+                    <p>Order #KFD069561 — 1 item</p>
+                    <span>P140</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-footer">
+            <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
         </div>
     </div>
 
