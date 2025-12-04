@@ -40,16 +40,30 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
+    margin-bottom: 40px;
 }
 
-.logo i {
-    font-size: 2.5rem;
-}
-
-.logo h1 {
-    font-size: 2.2rem;
+.logo-text {
+    color: #ffffff;
+    font-size: 32px;
     font-weight: 700;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: #d32f2f;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .restaurant-info {
