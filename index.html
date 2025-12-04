@@ -141,11 +141,10 @@
 
     </div>
 
-
     <!-- JAVASCRIPT -->
     <script>
 // ===========================
-// PRODUCT DATA
+// PRODUCT DATA (UPDATED FOR CART INTEGRATION)
 // ===========================
 const products = [
     {
@@ -268,23 +267,54 @@ let currentProduct = null;
 let modalQuantity = 1;
 
 // ===========================
-// CART MANAGEMENT
+// CART MANAGEMENT (UPDATED FOR CART INTEGRATION)
 // ===========================
 function getCart() {
-    return JSON.parse(localStorage.getItem("cart") || "[]");
+    return JSON.parse(localStorage.getItem("kfoods-cart") || "[]");
 }
 
 function saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
 }
 
 function updateCartCount() {
     const cartCountEl = document.getElementById("cart-count");
     if (cartCountEl) {
         const cart = getCart();
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountEl.textContent = totalItems;
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        cartCountEl.textContent = totalItems || 0;
+        console.log("Cart count updated:", totalItems);
     }
+}
+
+// Save products to localStorage for cart page access
+function saveProductsToStorage() {
+    // Format products for cart page compatibility
+    const productsForCart = products.map(product => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        category: product.category[0] || "best",
+        bestSeller: product.category.includes("best"),
+        icon: getIconForCategory(product.category[0])
+    }));
+    
+    localStorage.setItem('kfoods-products', JSON.stringify(productsForCart));
+    console.log("Products saved to localStorage for cart page");
+}
+
+// Helper function to get icon based on category
+function getIconForCategory(category) {
+    const iconMap = {
+        'best': 'fas fa-star',
+        'sizzling': 'fas fa-fire',
+        'sushi': 'fas fa-sushi',
+        'meal': 'fas fa-bowl-rice',
+        'side': 'fas fa-utensil-spoon',
+        'snack': 'fas fa-mortar-pestle'
+    };
+    return iconMap[category] || 'fas fa-utensils';
 }
 
 // ===========================
@@ -311,12 +341,17 @@ function renderProducts(filter = "all") {
         
         card.innerHTML = `
             <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}" loading="lazy">
             </div>
             <div class="product-content">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description.substring(0, 80)}...</p>
-                <div class="product-price">₱${product.price.toFixed(2)}</div>
+                <div class="product-footer">
+                    <div class="product-price">₱${product.price.toFixed(2)}</div>
+                    <button class="add-btn" onclick="event.stopPropagation(); openProductModal(${product.id})">
+                        + Add
+                    </button>
+                </div>
             </div>
         `;
         
@@ -328,11 +363,11 @@ function renderProducts(filter = "all") {
         grid.appendChild(card);
     });
 
-    console.log(`Rendered ${filtered.length} products`);
+    console.log(`Rendered ${filtered.length} products for filter: ${filter}`);
 }
 
 // ===========================
-// PRODUCT MODAL (TEMPLATE STYLE)
+// PRODUCT MODAL
 // ===========================
 function openProductModal(productId) {
     console.log("Opening modal for product:", productId);
@@ -351,7 +386,7 @@ function openProductModal(productId) {
         existingModal.remove();
     }
 
-    // Create modal with EXACT template structure
+    // Create modal
     const modalHTML = `
         <div id="productModalBackdrop" class="modal-backdrop show">
             <div class="modal" onclick="event.stopPropagation()">
@@ -436,7 +471,7 @@ function openProductModal(productId) {
     document.body.style.overflow = "hidden";
     updateModalTotal();
     
-    console.log("Modal opened successfully");
+    console.log("Modal opened for:", currentProduct.name);
 }
 
 function closeProductModal() {
@@ -482,8 +517,13 @@ function updateModalTotal() {
 }
 
 function confirmAddToCart() {
-    if (!currentProduct) return;
+    if (!currentProduct) {
+        console.error("No current product selected!");
+        return;
+    }
 
+    console.log("Adding to cart:", currentProduct.name);
+    
     let selectedAddons = [];
     let addonsTotal = 0;
     const checkboxes = document.querySelectorAll(".addon-checkbox");
@@ -505,16 +545,21 @@ function confirmAddToCart() {
     );
 
     if (existingIndex !== -1) {
-        cart[existingIndex].quantity += modalQuantity;
+        // Update quantity for existing item with same addons
+        cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + modalQuantity;
+        console.log("Updated existing item quantity:", cart[existingIndex].quantity);
     } else {
-        cart.push({
+        // Add new item to cart
+        const cartItem = {
             id: currentProduct.id,
             name: currentProduct.name,
             price: perUnit,
             quantity: modalQuantity,
-            image: currentProduct.image,
-            addons: selectedAddons
-        });
+            addons: selectedAddons,
+            basePrice: currentProduct.price // Keep original price for reference
+        };
+        cart.push(cartItem);
+        console.log("Added new item to cart:", cartItem);
     }
 
     saveCart(cart);
@@ -522,7 +567,8 @@ function confirmAddToCart() {
     closeProductModal();
     showToast("✅ Successfully Added to Cart!");
     
-    console.log("Item added to cart:", currentProduct.name);
+    // Log cart state for debugging
+    console.log("Cart after adding:", cart);
 }
 
 function showToast(message) {
@@ -593,19 +639,41 @@ function initializeCartButton() {
     }
 }
 
-
 // ===========================
 // INITIALIZE ON PAGE LOAD
 // ===========================
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Page loaded, initializing...");
+    
+    // First, save products to localStorage for cart page
+    saveProductsToStorage();
+    
+    // Then initialize everything else
     renderProducts();
     updateCartCount();
     initializeFilters();
     initializeProfileSidebar();
     initializeCartButton();
+    
+    // Debug: log initial cart state
+    console.log("Initial cart:", getCart());
+    console.log("Products saved to localStorage:", JSON.parse(localStorage.getItem('kfoods-products') || '[]').length);
+    
     console.log("Initialization complete!");
 });
+
+// Add a global function to debug cart (useful for testing)
+window.debugCart = function() {
+    console.log("=== CART DEBUG INFO ===");
+    console.log("LocalStorage key 'kfoods-cart':", localStorage.getItem('kfoods-cart'));
+    console.log("Parsed cart:", getCart());
+    console.log("Total items in cart:", getCart().reduce((sum, item) => sum + (item.quantity || 1), 0));
+    console.log("LocalStorage key 'kfoods-products':", localStorage.getItem('kfoods-products') ? "Exists" : "Missing");
+    console.log("=== END DEBUG ===");
+};
+
+// Optional: Auto-save products periodically to ensure cart page has latest data
+setInterval(saveProductsToStorage, 30000); // Every 30 seconds
     </script>
 </body>
 </html>
