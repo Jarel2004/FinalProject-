@@ -7,7 +7,7 @@ const products = [
         name: "Bibimbap",
         price: 150,
         category: "best",
-        image: "https://i.imgur.com/1R5U1oJ.jpeg",
+        image: "src/Bibimbap.jpeg",
         description: "A colorful and comforting Korean rice bowl topped with seasoned vegetables, marinated beef, fried egg, and spicy gochujang sauce.",
         rating: 4.8,
         reviews: "1.2k",
@@ -24,99 +24,179 @@ const products = [
     },
     {
         id: 2,
-        name: "Kimchi Fried Rice",
+        name: "Chicken Roll Sushi",
         price: 140,
-        category: "best",
-        image: "https://i.imgur.com/9xHZK5L.jpeg",
-        description: "Savory fried rice made with kimchi, vegetables, and topped with a fried egg. A perfect comfort food.",
-        rating: 4.7,
-        reviews: "980",
-        orders: "1.5k+",
-        tags: ["🔥 Bestseller", "⏱ 15–25 mins", "🌶 Spicy"],
-        spicy: true,
+        category: "sushi",
+        image: "src/Chicken_Roll.jpeg",
+        description: "Crispy fried chicken strips wrapped with fresh cucumber, avocado, and sushi rice in a seaweed roll, drizzled with special sauce.",
+        rating: 4.6,
+        reviews: "850",
+        orders: "1.4k+",
+        tags: ["🍣 Japanese", "⏱ 10–15 mins", "🍗 Chicken"],
+        spicy: false,
         addons: [
-            { name: "Extra Rice", description: "White rice", price: 20 },
-            { name: "Extra Egg", description: "Sunny side up", price: 25 },
-            { name: "Extra Kimchi", description: "50g portion", price: 30 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
+            { name: "Extra Chicken", description: "100g", price: 40 },
+            { name: "Extra Avocado", description: "Fresh slices", price: 25 },
+            { name: "Spicy Mayo", description: "Extra serving", price: 15 },
+            { name: "Miso Soup", description: "Regular bowl", price: 30 }
         ]
     },
     {
         id: 3,
-        name: "Bulgogi",
+        name: "H&S Chicken",
         price: 180,
-        category: "sizzling",
-        image: "https://i.imgur.com/7KxR3pM.jpeg",
-        description: "Thinly sliced marinated beef grilled to perfection, served with rice and vegetables.",
-        rating: 4.9,
-        reviews: "1.5k",
-        orders: "2.1k+",
-        tags: ["⭐ Premium", "⏱ 25–35 mins", "🥩 Grilled"],
+        category: "fried",
+        image: "src/H&S_Chicken.jpeg",
+        description: "Crispy fried chicken tossed in a special Honey & Soy glaze, creating the perfect balance of sweet and savory flavors with a satisfying crunch.",
+        rating: 4.7,
+        reviews: "950",
+        orders: "1.6k+",
+        tags: ["🍗 Chicken", "⏱ 25–35 mins", "🍯 Sweet & Savory"],
         spicy: false,
         addons: [
             { name: "Extra Rice", description: "White rice", price: 20 },
-            { name: "Extra Meat", description: "100g beef", price: 60 },
-            { name: "Soup", description: "Miso soup", price: 40 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
+            { name: "Extra Chicken", description: "2 pieces", price: 60 },
+            { name: "Coleslaw", description: "Fresh salad", price: 25 },
+            { name: "Soft Drinks", description: "330ml can", price: 30 }
         ]
     },
     {
         id: 4,
-        name: "Kimbap Roll",
+        name: "Hot Roll Sushi",
         price: 120,
         category: "sushi",
-        image: "https://i.imgur.com/2YtF8nQ.jpeg",
-        description: "Korean seaweed rice roll filled with vegetables, egg, and meat. Perfect for snacking.",
-        rating: 4.6,
-        reviews: "850",
+        image: "src/Hot_Roll.jpeg",
+        description: "Spicy tempura shrimp and fresh vegetables rolled in warm sushi rice, topped with spicy mayo and crunchy tempura flakes for a delicious fusion experience.",
+        rating: 4.5,
+        reviews: "780",
         orders: "1.2k+",
-        tags: ["🍱 Light meal", "⏱ 10–15 mins", "🥒 Fresh"],
-        spicy: false,
+        tags: ["🌶️ Spicy", "⏱ 10–15 mins", "🍤 Shrimp"],
+        spicy: true,
         addons: [
-            { name: "Extra Roll", description: "4 pieces", price: 50 },
-            { name: "Soy Sauce", description: "Premium", price: 10 },
-            { name: "Wasabi", description: "Fresh", price: 15 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
+            { name: "Extra Shrimp", description: "3 pieces", price: 50 },
+            { name: "Spicy Level", description: "Extra spicy", price: 10 },
+            { name: "Tempura Flakes", description: "Extra crunchy", price: 15 },
+            { name: "Green Tea", description: "Hot/Cold", price: 25 }
         ]
     },
     {
         id: 5,
-        name: "Tteokbokki",
+        name: "Mango Sushi",
         price: 130,
-        category: "best",
-        image: "https://i.imgur.com/5LmP9nK.jpeg",
-        description: "Spicy Korean rice cakes in sweet and spicy gochujang sauce. A street food favorite.",
-        rating: 4.8,
-        reviews: "1.1k",
-        orders: "1.8k+",
-        tags: ["🔥 Bestseller", "⏱ 15–20 mins", "🌶 Very Spicy"],
-        spicy: true,
+        category: "sushi",
+        image: "src/Mango.jpeg",
+        description: "Fresh ripe mango slices paired with creamy avocado and sushi rice, wrapped in seaweed for a sweet and refreshing tropical sushi experience.",
+        rating: 4.4,
+        reviews: "720",
+        orders: "1.1k+",
+        tags: ["🥭 Tropical", "⏱ 10–15 mins", "🥑 Vegetarian"],
+        spicy: false,
         addons: [
-            { name: "Extra Rice Cakes", description: "100g", price: 30 },
-            { name: "Boiled Egg", description: "1 piece", price: 20 },
-            { name: "Fish Cake", description: "3 pieces", price: 25 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
+            { name: "Extra Mango", description: "Fresh slices", price: 30 },
+            { name: "Extra Avocado", description: "Creamy", price: 25 },
+            { name: "Coconut Flakes", description: "Topping", price: 15 },
+            { name: "Tropical Juice", description: "Mango/Pineapple", price: 35 }
         ]
     },
     {
         id: 6,
-        name: "Japchae",
+        name: "Onigiri Sushi",
         price: 160,
-        category: "sizzling",
-        image: "https://i.imgur.com/8mN4vPl.jpeg",
-        description: "Stir-fried glass noodles with vegetables and beef in a savory-sweet sauce.",
-        rating: 4.7,
-        reviews: "920",
-        orders: "1.3k+",
-        tags: ["🍜 Noodles", "⏱ 20–30 mins", "🥕 Veggie-rich"],
+        category: "sushi",
+        image: "src/Onigiri.jpeg",
+        description: "Traditional Japanese rice balls filled with savory ingredients like salmon, tuna, or pickled plum, wrapped in crispy nori seaweed for a portable snack.",
+        rating: 4.3,
+        reviews: "680",
+        orders: "980+",
+        tags: ["🍙 Portable", "⏱ 5–10 mins", "🥢 Traditional"],
         spicy: false,
         addons: [
-            { name: "Extra Noodles", description: "100g", price: 35 },
-            { name: "Extra Vegetables", description: "Mixed", price: 25 },
-            { name: "Extra Meat", description: "50g beef", price: 45 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
+            { name: "Extra Onigiri", description: "1 piece", price: 45 },
+            { name: "Soy Sauce Pack", description: "Premium", price: 10 },
+            { name: "Seaweed Sheets", description: "Extra", price: 15 },
+            { name: "Japanese Tea", description: "Hot", price: 25 }
+        ]
+    },
+    {
+        id: 7,
+        name: "PokeBowl",
+        price: 160,
+        category: "healthy",
+        image: "src/PokeBowl.jpeg",
+        description: "Hawaiian-inspired bowl featuring fresh raw fish (tuna or salmon) over sushi rice with colorful vegetables, seaweed, and signature poke sauce.",
+        rating: 4.7,
+        reviews: "920",
+        orders: "1.5k+",
+        tags: ["🐟 Fresh", "⏱ 15–20 mins", "🥗 Healthy"],
+        spicy: false,
+        addons: [
+            { name: "Extra Fish", description: "Tuna/Salmon", price: 50 },
+            { name: "Extra Avocado", description: "Fresh slices", price: 25 },
+            { name: "Seaweed Salad", description: "Additional", price: 20 },
+            { name: "Wasabi", description: "Fresh", price: 15 }
+        ]
+    },
+    {
+        id: 8,
+        name: "Porkchop",
+        price: 160,
+        category: "meat",
+        image: "src/Porkchop.jpeg",
+        description: "Juicy grilled pork chop marinated in a special blend of spices, served with steaming rice, fresh vegetables, and a side of gravy.",
+        rating: 4.6,
+        reviews: "890",
+        orders: "1.3k+",
+        tags: ["🍖 Grilled", "⏱ 25–35 mins", "🔥 Bestseller"],
+        spicy: false,
+        addons: [
+            { name: "Extra Pork", description: "100g", price: 55 },
+            { name: "Extra Gravy", description: "Special sauce", price: 15 },
+            { name: "Mashed Potatoes", description: "Creamy", price: 30 },
+            { name: "Corn & Carrots", description: "Steamed", price: 20 }
+        ]
+    },
+    {
+        id: 9,
+        name: "Softshell Mango Sushi",
+        price: 160,
+        category: "sushi",
+        image: "src/Softshell_Mango.jpeg",
+        description: "Crispy soft-shell crab combined with sweet mango slices, avocado, and sushi rice, creating a perfect harmony of textures and flavors.",
+        rating: 4.5,
+        reviews: "750",
+        orders: "1.1k+",
+        tags: ["🦀 Crispy", "⏱ 15–20 mins", "🥭 Sweet"],
+        spicy: false,
+        addons: [
+            { name: "Extra Crab", description: "Soft-shell", price: 60 },
+            { name: "Extra Mango", description: "Fresh slices", price: 25 },
+            { name: "Eel Sauce", description: "Drizzle", price: 15 },
+            { name: "Sesame Seeds", description: "Toasted", price: 10 }
+        ]
+    },
+    {
+        id: 10,
+        name: "Stirfried Fishcake",
+        price: 160,
+        category: "korean",
+        image: "src/Stirfried_Fishcake.jpeg",
+        description: "Savory Korean fish cakes stir-fried with colorful vegetables in a sweet and spicy sauce, a popular street food dish served hot.",
+        rating: 4.4,
+        reviews: "710",
+        orders: "1.0k+",
+        tags: ["🌶️ Spicy", "⏱ 15–20 mins", "🇰🇷 Korean"],
+        spicy: true,
+        addons: [
+            { name: "Extra Fishcake", description: "100g", price: 40 },
+            { name: "Spicy Level", description: "Adjustable", price: 0 },
+            { name: "Rice Cakes", description: "Tteokbokki style", price: 35 },
+            { name: "Kimchi", description: "Side dish", price: 25 }
         ]
     }
+
+    
+    
+
 ];
 
 // ===========================
