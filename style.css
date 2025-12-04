@@ -172,7 +172,7 @@ header{
     overflow: hidden;
     box-shadow: 0 5px 12px rgba(0,0,0,0.08);
     transition: 0.3s;
-     flex-direction: column;
+    
 }
 
 
@@ -1187,4 +1187,54 @@ footer {
     font-size: 12px;
     font-weight: 500;
     display: inline-block;
+}
+.address-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.address-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 350px;
+    animation: fadeIn 0.3s ease;
+}
+
+.address-modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.address-modal-content input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.save-address-btn {
+    width: 100%;
+    padding: 12px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.close-address-btn {
+    width: 100%;
+    padding: 10px;
+    background: #eee;
+    border: none;
+    border-radius: 8px;
 }

@@ -329,17 +329,34 @@ function removeFromCart(productId) {
 
 // Load delivery address from localStorage
 function loadDeliveryAddress() {
-    const addresses = JSON.parse(localStorage.getItem('kfoods-addresses')) || [];
-    const defaultAddress = addresses.find(addr => addr.isDefault);
-    
-    if (defaultAddress) {
-        deliveryAddress.textContent = `${defaultAddress.street}, ${defaultAddress.city} ${defaultAddress.zip}`;
-    } else {
-        deliveryAddress.textContent = 'No address set yet';
+    let address = localStorage.getItem("kfoods-address");
+
+    // If address exists, show it
+    if (address && address.trim() !== "") {
+        deliveryAddress.textContent = address;
+        return;
     }
-    
-    console.log("Delivery address loaded:", deliveryAddress.textContent);
+
+    // If address NOT saved as a string, check if user saved separate components
+    const street = localStorage.getItem("kfoods-street") || "";
+    const brgy   = localStorage.getItem("kfoods-brgy") || "";
+    const city   = localStorage.getItem("kfoods-city") || "";
+    const zip    = localStorage.getItem("kfoods-zip") || "";
+
+    // If user filled fields before → rebuild address
+    if (street || brgy || city || zip) {
+        const fullAddress = `${street}, ${brgy}, ${city} ${zip}`;
+        deliveryAddress.textContent = fullAddress;
+
+        // Save final address to main key so cart reads it later
+        localStorage.setItem("kfoods-address", fullAddress);
+        return;
+    }
+
+    // Default
+    deliveryAddress.textContent = "No address set yet";
 }
+
 
 // Setup event listeners
 function setupEventListeners() {
@@ -352,13 +369,13 @@ function setupEventListeners() {
             return;
         }
         
-        const addresses = JSON.parse(localStorage.getItem('kfoods-addresses')) || [];
-        const defaultAddress = addresses.find(addr => addr.isDefault);
-        
-        if (!defaultAddress) {
-            alert('Please set a delivery address first. You can add one from your profile.');
+       const address = localStorage.getItem("kfoods-address");
+
+        if (!address) {
+            alert("Please set a delivery address first. You can add one from your profile.");
             return;
         }
+
         
         showOrderConfirmation();
     });
@@ -525,3 +542,59 @@ function showToast(message) {
         toast.classList.remove("show");
     }, 2000);
 }
+// ===========================
+// PROFILE SIDEBAR FOR CART PAGE
+// ===========================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const profileToggle = document.getElementById("profile-toggle");
+    const sidebar = document.getElementById("profile-sidebar");
+    const closeProfileBtn = document.querySelector(".close-profile");
+
+    if (!profileToggle || !sidebar) {
+        console.warn("Profile sidebar elements not found on cart page.");
+        return;
+    }
+
+    // Open sidebar
+    profileToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        sidebar.classList.add("open");
+    });
+
+    // Close sidebar
+    closeProfileBtn.addEventListener("click", function () {
+        sidebar.classList.remove("open");
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", function (e) {
+        if (!sidebar.contains(e.target) && !profileToggle.contains(e.target)) {
+            sidebar.classList.remove("open");
+        }
+    });
+
+    // Load saved address into sidebar
+    const savedAddress = localStorage.getItem("kfoods-address") || "No address set yet";
+    const addressLabel = document.querySelector(".current-address");
+    if (addressLabel) addressLabel.textContent = savedAddress;
+
+    // Load order history
+    const historyBox = document.getElementById("order-history-list");
+    const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
+
+    if (historyBox) {
+        if (transactions.length === 0) {
+            historyBox.innerHTML = "<p>No previous orders.</p>";
+        } else {
+            historyBox.innerHTML = transactions.map(t => `
+                <div class="order-item">
+                    <p>Order #${t.id} — ${t.items.length} item(s)</p>
+                    <span>P${t.total}</span>
+                </div>
+            `).join("");
+        }
+    }
+});
+

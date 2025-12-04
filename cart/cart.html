@@ -123,6 +123,122 @@
         </div>
     </div>
 
+    <!-- ORDER CONFIRMATION MODAL -->
+<div id="order-modal" class="order-modal">
+    <div class="order-modal-content">
+        <button class="close-modal">&times;</button>
+
+        <h2>Order Confirmed!</h2>
+        <p>Your order has been placed successfully.</p>
+
+        <p style="font-size:14px; color:#555; margin-top:-5px;">
+            ✔ Check your email for order confirmation.
+        </p>
+
+        <h3>Order Number: <span id="order-number"></span></h3>
+
+        <div class="order-items-list" id="order-items-list"></div>
+
+        <h3>Total: <span id="order-total-price"></span></h3>
+
+        <button class="close-btn">Close</button>
+    </div>
+</div>
+
+<style>
+.order-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.order-modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 400px;
+    animation: fadeIn 0.3s ease;
+}
+.order-items-list div {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+.close-modal {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.close-btn {
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #d32f2f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.close-btn:hover {
+    background: #b02828;
+}
+</style>
+
+<!-- ============================= -->
+<!-- PROFILE SIDEBAR (Slide Right) -->
+<!-- ============================= -->
+
+<div id="profile-sidebar" class="profile-sidebar">
+
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+        </div>
+
+        <div class="profile-info">
+            <h3 class="profile-name">Welcome, Guest!</h3>
+            <p class="profile-email">guest@kfoods.com</p>
+
+            <button class="login-btn">Sign In / Register</button>
+        </div>
+
+        <button class="close-profile">&times;</button>
+    </div>
+
+    <div class="profile-content">
+
+        <div class="profile-section">
+            <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
+            <p class="current-address">No address set yet</p>
+
+            <button class="manage-address-btn">
+                <i class="fas fa-edit"></i> Manage Addresses
+            </button>
+        </div>
+
+        <div class="profile-section">
+            <h4><i class="fas fa-history"></i> Order History</h4>
+            <div id="order-history-list">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="profile-footer">
+        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+    </div>
+
+</div>
+
+
+
     <script src="cart.js"></script>
+
+
 </body>
 </html>

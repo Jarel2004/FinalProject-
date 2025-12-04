@@ -875,5 +875,64 @@ window.debugCart = function() {
 // Optional: Auto-save products periodically to ensure cart page has latest data
 setInterval(saveProductsToStorage, 30000); // Every 30 seconds
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const manageBtn = document.querySelector(".manage-address-btn");
+    const addressModal = document.getElementById("addressModal");
+    const saveBtn = document.querySelector(".save-address-btn");
+    const closeBtn = document.querySelector(".close-address-btn");
+
+    // Open modal
+    manageBtn.addEventListener("click", () => {
+        addressModal.style.display = "flex";
+    });
+
+    // Close modal
+    closeBtn.addEventListener("click", () => {
+        addressModal.style.display = "none";
+    });
+
+    // Save address
+    saveBtn.addEventListener("click", () => {
+        const street = document.getElementById("addrStreet").value;
+        const brgy = document.getElementById("addrBarangay").value;
+        const city = document.getElementById("addrCity").value;
+        const zip = document.getElementById("addrZip").value;
+
+        const address = `${street}, ${brgy}, ${city} ${zip}`;
+        localStorage.setItem("kfoods-address", address);
+
+        document.querySelector(".current-address").textContent = address;
+
+        addressModal.style.display = "none";
+        showToast("✔ Address Saved!");
+    });
+});
+</script>
+
+
+
+
+<div id="addressModal" class="address-modal">
+    <div class="address-modal-content">
+        <h2>Manage Address</h2>
+
+        <label>Street</label>
+        <input type="text" id="addrStreet" placeholder="Street / House No.">
+
+        <label>Barangay</label>
+        <input type="text" id="addrBarangay" placeholder="Barangay">
+
+        <label>City</label>
+        <input type="text" id="addrCity" placeholder="City">
+
+        <label>ZIP Code</label>
+        <input type="text" id="addrZip" placeholder="ZIP">
+
+        <button class="save-address-btn">Save Address</button>
+        <button class="close-address-btn">Close</button>
+    </div>
+</div>
 </body>
 </html>
