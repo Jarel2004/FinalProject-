@@ -651,10 +651,6 @@ footer {
 
 
 
-/* ===========================
-   MODAL STYLES
-   =========================== */
-
 .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -1111,3 +1107,82 @@ footer {
     }
 }
 
+/* ============================
+   ADDITIONAL FIXES - ADD THESE TO YOUR style.css
+============================ */
+
+/* Section Title */
+.section-title {
+    font-size: 1.8rem;
+    color: #d32f2f;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Order Item (if missing) */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.order-item p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.order-item span {
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+/* Login Button */
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    color: #d32f2f;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: rgba(255,255,255,0.9);
+}
+
+/* Profile Info */
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+}
+
+.profile-email {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Ensure info-tag exists */
+.info-tag {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #f5f5f7;
+    color: #777;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+}
