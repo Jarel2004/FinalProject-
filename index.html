@@ -147,21 +147,18 @@
 // PRODUCT DATA (UPDATED FOR CART INTEGRATION)
 // ===========================
 const products = [
-    // ======================
-    // BEST SELLERS
-    // ======================
     {
-        id: 1,
+         id: 1,
         name: "Bibimbap",
         price: 129,
         category: "best",
         image: "src/Bibimbap.jpeg",
-        description: "Korean mixed rice bowl with vegetables, egg, and gochujang.",
         rating: 4.8,
         reviews: "1.2k",
         orders: "1.9k+",
-        tags: ["🔥 Bestseller", "⏱ 20–30 mins", "🌶️ Spicy"],
-        spicy: true,
+        description: "A colorful and comforting Korean rice bowl topped with seasoned vegetables, marinated beef, fried egg, and spicy gochujang sauce. Served warm and mixed just before eating.",
+        tags: ["🔥 Bestseller", "⏱ 20–30 mins", "🏷 Free utensils"],
+        spicy: "🌶 Spicy · Korean Rice Bowl",
         addons: [
             { name: "Extra Rice", description: "White rice", price: 20 },
             { name: "Extra Egg", description: "Sunny side up", price: 25 },
@@ -176,31 +173,30 @@ const products = [
         price: 129,
         category: "best",
         image: "src/PokeBowl.jpeg",
-        description: "Hawaiian bowl with fresh toppings.",
         rating: 4.7,
         reviews: "920",
         orders: "1.5k+",
-        tags: ["🐟 Fresh", "⏱ 15–20 mins", "🥗 Healthy"],
-        spicy: false,
+        description: "Savory fried rice with tangy kimchi, vegetables, and topped with a fried egg. A perfect blend of spicy and umami flavors.",
+        tags: ["🌶 Spicy", "⏱ 15–20 mins", "🔥 Popular"],
+        spicy: "🌶 Spicy · Fried Rice",
         addons: [
-            { name: "Extra Fish", description: "Tuna/Salmon", price: 50 },
-            { name: "Extra Avocado", description: "Fresh slices", price: 25 },
-            { name: "Seaweed Salad", description: "Additional", price: 20 },
-            { name: "Wasabi", description: "Fresh", price: 15 }
+            { name: "Extra Kimchi", description: "Fermented cabbage", price: 30 },
+            { name: "Extra Egg", description: "Sunny side up", price: 25 },
+            { name: "Pork Belly", description: "Grilled slices", price: 50 }
         ]
     },
     {
         id: 3,
         name: "Stirfried Fishcake (Sweet & Spicy)",
+        category: ["best"],
         price: 100,
-        category: "best",
         image: "src/Stirfried_Fishcake.jpeg",
-        description: "Korean stirfried eomuk in spicy sauce.",
         rating: 4.5,
-        reviews: "710",
-        orders: "1.0k+",
+        reviews: 710,
+        orders: 1000,
+        description: "Korean stirfried eomuk in spicy sauce.",
         tags: ["🌶️ Spicy", "⏱ 15–20 mins", "🇰🇷 Korean"],
-        spicy: true,
+        spicy: "🌶 Spicy · Korean Street Food",
         addons: [
             { name: "Extra Fishcake", description: "100g", price: 40 },
             { name: "Spicy Level", description: "Adjustable", price: 0 },
@@ -209,17 +205,17 @@ const products = [
         ]
     },
     {
-        id: 4,
+         id: 4,
         name: "Porkchop w/ rice & salad",
+        category: ["best"],
         price: 79,
-        category: "best",
         image: "src/Porkchop.jpeg",
-        description: "Grilled porkchop with rice and salad.",
         rating: 4.4,
-        reviews: "890",
-        orders: "1.3k+",
+        reviews: 890,
+        orders: 1300,
+        description: "Grilled porkchop with rice and salad.",
         tags: ["🍖 Grilled", "⏱ 25–35 mins", "🔥 Bestseller"],
-        spicy: false,
+        spicy: "🍖 Juicy · Filipino Classic",
         addons: [
             { name: "Extra Pork", description: "100g", price: 55 },
             { name: "Extra Gravy", description: "Special sauce", price: 15 },
@@ -230,15 +226,15 @@ const products = [
     {
         id: 5,
         name: "Hot & spicy chicken w/ drinks",
+        category: ["best"],
         price: 110,
-        category: "best",
         image: "src/H&S_Chicken.jpeg",
-        description: "Spicy chicken meal with drinks.",
         rating: 4.7,
-        reviews: "950",
-        orders: "1.6k+",
+        reviews: 950,
+        orders: 1600,
+        description: "Spicy chicken meal with drinks.",
         tags: ["🍗 Chicken", "⏱ 25–35 mins", "🌶️ Spicy"],
-        spicy: true,
+        spicy: "🌶 Spicy · Fried Chicken",
         addons: [
             { name: "Extra Rice", description: "White rice", price: 20 },
             { name: "Extra Chicken", description: "2 pieces", price: 60 },
@@ -246,22 +242,18 @@ const products = [
             { name: "Soft Drinks", description: "330ml can", price: 30 }
         ]
     },
-
-    // ======================
-    // SUSHI
-    // ======================
     {
-        id: 6,
+         id: 6,
         name: "Chicken Roll Sushi",
+        category: ["sushi"],
         price: 145,
-        category: "sushi",
         image: "src/Chicken_Roll.jpeg",
-        description: "Crispy chicken roll wrapped in sushi rice.",
         rating: 4.6,
-        reviews: "850",
-        orders: "1.4k+",
+        reviews: 850,
+        orders: 1400,
+        description: "Crispy chicken roll wrapped in sushi rice.",
         tags: ["🍣 Japanese", "⏱ 10–15 mins", "🍗 Chicken"],
-        spicy: false,
+        spicy: "🍣 Fresh · Japanese Fusion",
         addons: [
             { name: "Extra Chicken", description: "100g", price: 40 },
             { name: "Extra Avocado", description: "Fresh slices", price: 25 },
@@ -272,15 +264,15 @@ const products = [
     {
         id: 7,
         name: "Hot Roll Sushi",
+        category: ["sushi"],
         price: 149,
-        category: "sushi",
         image: "src/Hot_Roll.jpeg",
-        description: "Spicy shrimp tempura sushi roll.",
         rating: 4.5,
-        reviews: "780",
-        orders: "1.2k+",
+        reviews: 780,
+        orders: 1200,
+        description: "Spicy shrimp tempura sushi roll.",
         tags: ["🌶️ Spicy", "⏱ 10–15 mins", "🍤 Shrimp"],
-        spicy: true,
+        spicy: "🌶 Spicy · Japanese Fusion",
         addons: [
             { name: "Extra Shrimp", description: "3 pieces", price: 50 },
             { name: "Spicy Level", description: "Extra spicy", price: 10 },
@@ -291,15 +283,15 @@ const products = [
     {
         id: 8,
         name: "Softshell Mango Sushi",
+        category: ["sushi"],
         price: 149,
-        category: "sushi",
         image: "src/Softshell_Mango.jpeg",
-        description: "Softshell crab with mango sushi.",
         rating: 4.5,
-        reviews: "750",
-        orders: "1.1k+",
+        reviews: 750,
+        orders: 1100,
+        description: "Softshell crab with mango sushi.",
         tags: ["🦀 Crispy", "⏱ 15–20 mins", "🥭 Sweet"],
-        spicy: false,
+        spicy: "🍣 Fresh · Japanese Fusion",
         addons: [
             { name: "Extra Crab", description: "Soft-shell", price: 60 },
             { name: "Extra Mango", description: "Fresh slices", price: 25 },
@@ -310,15 +302,15 @@ const products = [
     {
         id: 9,
         name: "Mango Sushi",
+        category: ["sushi"],
         price: 69,
-        category: "sushi",
         image: "src/Mango.jpeg",
-        description: "Sweet and fresh mango sushi.",
         rating: 4.4,
-        reviews: "720",
-        orders: "1.1k+",
+        reviews: 720,
+        orders: 1100,
+        description: "Sweet and fresh mango sushi.",
         tags: ["🥭 Tropical", "⏱ 10–15 mins", "🥑 Vegetarian"],
-        spicy: false,
+        spicy: "🥭 Tropical · Sweet Sushi",
         addons: [
             { name: "Extra Mango", description: "Fresh slices", price: 30 },
             { name: "Extra Avocado", description: "Creamy", price: 25 },
@@ -329,15 +321,15 @@ const products = [
     {
         id: 10,
         name: "Onigiri",
+        category: ["sushi"],
         price: 120,
-        category: "sushi",
         image: "src/Onigiri.jpeg",
-        description: "Japanese rice ball wrapped in nori.",
         rating: 4.3,
-        reviews: "680",
-        orders: "980+",
+        reviews: 680,
+        orders: 980,
+        description: "Japanese rice ball wrapped in nori.",
         tags: ["🍙 Portable", "⏱ 5–10 mins", "🥢 Traditional"],
-        spicy: false,
+        spicy: "🍙 Classic · Japanese Comfort Food",
         addons: [
             { name: "Extra Onigiri", description: "1 piece", price: 45 },
             { name: "Soy Sauce Pack", description: "Premium", price: 10 },
@@ -348,15 +340,15 @@ const products = [
     {
         id: 11,
         name: "Kimbap",
+        category: ["sushi"],
         price: 89,
-        category: "sushi",
-        image: "src/Kimbap.jpeg",
-        description: "Korean-style maki rolls.",
+        image: "src/Bibimbap.jpeg",
         rating: 4.4,
-        reviews: "650",
-        orders: "950+",
+        reviews: 650,
+        orders: 950,
+        description: "Korean-style maki rolls.",
         tags: ["🇰🇷 Korean", "⏱ 10–15 mins", "🍱 Light meal"],
-        spicy: false,
+        spicy: "🇰🇷 Korean · Rice Rolls",
         addons: [
             { name: "Extra Kimbap", description: "4 pieces", price: 40 },
             { name: "Pickled Radish", description: "Danmuji", price: 15 },
@@ -371,15 +363,15 @@ const products = [
     {
         id: 12,
         name: "Pork Sisig",
+        category: ["sizzling"],
         price: 129,
-        category: "sizzling",
         image: "src/Sisig.jpeg",
-        description: "Sizzling pork sisig topped with egg.",
         rating: 4.6,
-        reviews: "820",
-        orders: "1.4k+",
+        reviews: 820,
+        orders: 1400,
+        description: "Sizzling pork sisig topped with egg.",
         tags: ["🔥 Sizzling", "⏱ 20–30 mins", "🌶️ Spicy"],
-        spicy: true,
+        spicy: "🌶 Spicy · Filipino Sizzling",
         addons: [
             { name: "Extra Egg", description: "Sunny side up", price: 25 },
             { name: "Extra Rice", description: "White rice", price: 20 },
@@ -390,15 +382,15 @@ const products = [
     {
         id: 13,
         name: "Pepper Steak",
+        category: ["sizzling"],
         price: 129,
-        category: "sizzling",
         image: "src/Pepper_Steak.jpeg",
-        description: "Beef steak cooked with pepper sauce.",
         rating: 4.5,
-        reviews: "780",
-        orders: "1.2k+",
+        reviews: 780,
+        orders: 1200,
+        description: "Beef steak cooked with pepper sauce.",
         tags: ["🥩 Steak", "⏱ 25–35 mins", "🍛 Creamy"],
-        spicy: false,
+        spicy: "🥩 Juicy · Pepper Steak",
         addons: [
             { name: "Extra Steak", description: "100g", price: 70 },
             { name: "Mashed Potatoes", description: "Creamy", price: 30 },
@@ -409,15 +401,15 @@ const products = [
     {
         id: 14,
         name: "Kimchi Pork",
+        category: ["sizzling"],
         price: 129,
-        category: "sizzling",
         image: "src/Kimchi_Pork.jpeg",
-        description: "Sizzling pork cooked with kimchi.",
         rating: 4.4,
-        reviews: "740",
-        orders: "1.1k+",
+        reviews: 740,
+        orders: 1100,
+        description: "Sizzling pork cooked with kimchi.",
         tags: ["🇰🇷 Korean", "⏱ 20–30 mins", "🌶️ Spicy"],
-        spicy: true,
+        spicy: "🌶 Spicy · Korean Sizzling",
         addons: [
             { name: "Extra Kimchi", description: "100g", price: 30 },
             { name: "Extra Pork", description: "100g", price: 50 },
@@ -428,15 +420,15 @@ const products = [
     {
         id: 15,
         name: "Teriyaki",
+        category: ["sizzling"],
         price: 129,
-        category: "sizzling",
         image: "src/Teriyaki.jpeg",
-        description: "Sweet glazed teriyaki meat.",
         rating: 4.3,
-        reviews: "710",
-        orders: "1.0k+",
+        reviews: 710,
+        orders: 1000,
+        description: "Sweet glazed teriyaki meat.",
         tags: ["🇯🇵 Japanese", "⏱ 20–30 mins", "🍯 Sweet"],
-        spicy: false,
+        spicy: "🍯 Sweet · Japanese Glaze",
         addons: [
             { name: "Extra Meat", description: "Chicken/Beef", price: 55 },
             { name: "Teriyaki Sauce", description: "Extra glaze", price: 15 },
@@ -447,15 +439,15 @@ const products = [
     {
         id: 17,
         name: "Spicy Garlic Shrimp",
+        category: ["sizzling"],
         price: 129,
-        category: "sizzling",
         image: "src/Garlic_Shrimp.jpeg",
-        description: "Shrimp cooked in spicy garlic butter.",
         rating: 4.5,
-        reviews: "760",
-        orders: "1.2k+",
+        reviews: 760,
+        orders: 1200,
+        description: "Shrimp cooked in spicy garlic butter.",
         tags: ["🦐 Shrimp", "⏱ 15–25 mins", "🌶️ Spicy"],
-        spicy: true,
+        spicy: "🌶 Spicy · Garlic Shrimp",
         addons: [
             { name: "Extra Shrimp", description: "5 pieces", price: 60 },
             { name: "Garlic Butter", description: "Extra sauce", price: 20 },
@@ -464,6 +456,10 @@ const products = [
         ]
     }
 ];
+    
+    
+
+
 // ===========================
 // GLOBAL VARIABLES
 // ===========================
