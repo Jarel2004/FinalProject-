@@ -1,4 +1,3 @@
-// Product data (same as main page for reference)
 const products = [
     {
         id: 1,
@@ -56,10 +55,8 @@ const products = [
     }
 ];
 
-// Load cart from localStorage
 let cart = JSON.parse(localStorage.getItem('kfoods-cart')) || [];
 
-// DOM elements
 const cartPageItems = document.getElementById('cart-page-items');
 const cartPageCount = document.getElementById('cart-page-count');
 const cartSubtotal = document.getElementById('cart-subtotal');
@@ -75,7 +72,6 @@ const closeModalBtn = document.querySelector('.close-modal');
 const closeBtn = document.querySelector('.close-btn');
 const trackOrderBtn = document.querySelector('.track-order-btn');
 
-// Initialize cart page
 function initCartPage() {
     console.log("Initializing cart page...");
     updateCartPage();
@@ -84,15 +80,12 @@ function initCartPage() {
     console.log("Cart page initialized successfully!");
 }
 
-// Update cart page display
 function updateCartPage() {
     console.log("Updating cart page, items:", cart);
     
-    // Update cart count
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
     cartPageCount.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
     
-    // Update cart items list
     if (cart.length === 0) {
         cartPageItems.innerHTML = `
             <div class="empty-cart">
@@ -126,7 +119,6 @@ function updateCartPage() {
             cartPageItems.appendChild(cartItemElement);
         });
         
-        // Add event listeners to quantity buttons
         document.querySelectorAll('.decrease-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const productId = parseInt(this.getAttribute('data-id'));
@@ -149,7 +141,6 @@ function updateCartPage() {
         });
     }
     
-    // Update totals
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     const deliveryFee = 50;
     const serviceFee = 20;
@@ -158,11 +149,9 @@ function updateCartPage() {
     cartSubtotal.textContent = `P${subtotal}`;
     cartTotalAmount.textContent = `P${total}`;
     
-    // Update localStorage
     localStorage.setItem('kfoods-cart', JSON.stringify(cart));
 }
 
-// Update cart quantity
 function updateCartQuantity(productId, change) {
     const itemIndex = cart.findIndex(item => item.id === productId);
     
@@ -173,7 +162,6 @@ function updateCartQuantity(productId, change) {
     
     cart[itemIndex].quantity += change;
     
-    // Remove item if quantity is 0 or less
     if (cart[itemIndex].quantity <= 0) {
         cart.splice(itemIndex, 1);
     }
@@ -181,7 +169,6 @@ function updateCartQuantity(productId, change) {
     updateCartPage();
 }
 
-// Remove item from cart
 function removeFromCart(productId) {
     if (confirm('Are you sure you want to remove this item from your cart?')) {
         cart = cart.filter(item => item.id !== productId);
@@ -189,7 +176,6 @@ function removeFromCart(productId) {
     }
 }
 
-// Load delivery address
 function loadDeliveryAddress() {
     const addresses = JSON.parse(localStorage.getItem('kfoods-addresses')) || [];
     const defaultAddress = addresses.find(addr => addr.isDefault);
@@ -201,16 +187,13 @@ function loadDeliveryAddress() {
     }
 }
 
-// Setup event listeners
 function setupEventListeners() {
-    // Checkout button
     checkoutPageBtn.addEventListener('click', function() {
         if (cart.length === 0) {
             alert('Your cart is empty. Add some items before checking out!');
             return;
         }
         
-        // Check if there's a delivery address
         const addresses = JSON.parse(localStorage.getItem('kfoods-addresses')) || [];
         const defaultAddress = addresses.find(addr => addr.isDefault);
         
@@ -219,11 +202,9 @@ function setupEventListeners() {
             return;
         }
         
-        // Show order confirmation modal
         showOrderConfirmation();
     });
     
-    // Clear cart button
     clearCartPageBtn.addEventListener('click', function() {
         if (cart.length === 0) {
             alert('Your cart is already empty!');
@@ -237,7 +218,6 @@ function setupEventListeners() {
         }
     });
     
-    // Modal event listeners
     closeModalBtn.addEventListener('click', closeModal);
     closeBtn.addEventListener('click', closeModal);
     
@@ -258,13 +238,10 @@ function setupEventListeners() {
     });
 }
 
-// Show order confirmation modal
 function showOrderConfirmation() {
-    // Generate random order number
     const orderNum = Math.floor(10000 + Math.random() * 90000);
     orderNumber.textContent = orderNum;
     
-    // Calculate total
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     const deliveryFee = 50;
     const serviceFee = 20;
@@ -272,7 +249,6 @@ function showOrderConfirmation() {
     
     orderTotalPrice.textContent = `P${total}`;
     
-    // Build order items list
     orderItemsList.innerHTML = '';
     cart.forEach((item, index) => {
         const orderItem = document.createElement('div');
@@ -288,21 +264,17 @@ function showOrderConfirmation() {
         orderItemsList.appendChild(orderItem);
     });
     
-    // Show the modal
     modal.style.display = 'flex';
     
-    // Save transaction and clear cart
     saveTransaction([...cart]);
     cart = [];
     updateCartPage();
 }
 
-// Close modal function
 function closeModal() {
     modal.style.display = 'none';
 }
 
-// Save transaction to localStorage
 function saveTransaction(orderData) {
     const transactions = JSON.parse(localStorage.getItem('kfoods-transactions')) || [];
     const transaction = {
@@ -317,5 +289,4 @@ function saveTransaction(orderData) {
     localStorage.setItem('kfoods-transactions', JSON.stringify(transactions));
 }
 
-// Initialize when page loads
 document.addEventListener('DOMContentLoaded', initCartPage);
