@@ -172,7 +172,9 @@ header{
     overflow: hidden;
     box-shadow: 0 5px 12px rgba(0,0,0,0.08);
     transition: 0.3s;
+     flex-direction: column;
 }
+
 
 .product-card:hover {
     transform: translateY(-6px);

@@ -321,11 +321,10 @@ function updateCartQuantity(productId, change) {
 
 // Remove item from cart
 function removeFromCart(productId) {
-    if (confirm('Are you sure you want to remove this item from your cart?')) {
-        cart = cart.filter(item => item.id !== productId);
-        updateCartPage();
-        console.log(`Item ${productId} removed from cart`);
-    }
+    cart = cart.filter(item => item.id !== productId);
+    updateCartPage();
+    showToast("Item removed from cart!");
+    console.log(`Item ${productId} removed from cart`);
 }
 
 // Load delivery address from localStorage
@@ -516,3 +515,13 @@ document.addEventListener('DOMContentLoaded', function() {
         cartCountBadge.textContent = totalItems;
     }
 });
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
