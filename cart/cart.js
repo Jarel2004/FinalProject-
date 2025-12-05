@@ -597,26 +597,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Load saved address into sidebar
-    const savedAddress = localStorage.getItem("kfoods-address") || "No address set yet";
-    const addressLabel = document.querySelector(".current-address");
-    if (addressLabel) addressLabel.textContent = savedAddress;
+    // SIMPLE FIXED ORDER HISTORY LOADER
+const historyBox = document.getElementById("order-history-list");
+const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
 
-    // Load order history
-    const historyBox = document.getElementById("order-history-list");
-    const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
-
-    if (historyBox) {
-        if (transactions.length === 0) {
-            historyBox.innerHTML = "<p>No previous orders.</p>";
-        } else {
-            historyBox.innerHTML = transactions.map(t => `
-                <div class="order-item">
-                    <p>Order #${t.id} — ${t.items.length} item(s)</p>
-                    <span>P${t.total}</span>
-                </div>
-            `).join("");
-        }
+if (historyBox) {
+    if (transactions.length === 0) {
+        historyBox.innerHTML = "<p>No previous orders.</p>";
+    } else {
+        historyBox.innerHTML = transactions.map(t => `
+            <div class="order-item">
+                <p><strong>Order #${t.id}</strong></p>
+                <p>${t.items.length} item(s)</p>
+                <p>Total: P${t.total}</p>
+            </div>
+        `).join("");
     }
+}
+
 });
 
