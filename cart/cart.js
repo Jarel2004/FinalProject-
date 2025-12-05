@@ -301,38 +301,34 @@ cartTotalAmount.textContent = `P${total}`;
 
 // Update item quantity in cart
 function updateCartQuantity(productId, change) {
-    console.log(`Updating quantity for product ${productId} by ${change}`);
-    
     const itemIndex = cart.findIndex(item => item.id === productId);
-    
-    if (itemIndex === -1) {
-        console.error(`Product with ID ${productId} not found in cart!`);
-        return;
-    }
-    
-    // Initialize quantity if not present
-    if (!cart[itemIndex].quantity) {
-        cart[itemIndex].quantity = 1;
-    }
-    
-    // Update quantity
-    cart[itemIndex].quantity += change;
-    
-    // Remove item if quantity reaches 0 or below
+
+    if (itemIndex === -1) return;
+
+    cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + change;
+
     if (cart[itemIndex].quantity <= 0) {
         cart.splice(itemIndex, 1);
     }
-    
+
+    // Save updated cart
+    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
+
     updateCartPage();
 }
+
 
 // Remove item from cart
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
+
+    // Save updated cart
+    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
+
     updateCartPage();
     showToast("Item removed from cart!");
-    console.log(`Item ${productId} removed from cart`);
 }
+
 
 // Load delivery address from localStorage
 function loadDeliveryAddress() {
@@ -379,9 +375,10 @@ function setupEventListeners() {
        const address = localStorage.getItem("kfoods-address");
 
         if (!address) {
-            alert("Please set a delivery address first. You can add one from your profile.");
+            showToast("Please set a delivery address first. You can add one from your profile.");
             return;
         }
+
 
         
         showOrderConfirmation();
@@ -394,13 +391,31 @@ function setupEventListeners() {
             return;
         }
         
-        if (confirm('Are you sure you want to clear your cart?')) {
-            cart = [];
-            updateCartPage();
-            alert('Cart cleared!');
-            console.log("Cart cleared");
-        }
+        cart = [];
+        localStorage.setItem("kfoods-cart", JSON.stringify(cart));
+        updateCartPage();
+        showToast("Cart cleared!");
+
     });
+    function showConfirm(message, onYes) {
+    const modal = document.getElementById("confirm-modal");
+    const msg = document.getElementById("confirm-message");
+    const yesBtn = document.getElementById("confirm-yes");
+    const noBtn = document.getElementById("confirm-no");
+
+    msg.textContent = message;
+    modal.style.display = "flex";
+
+    yesBtn.onclick = () => {
+        modal.style.display = "none";
+        onYes();
+    };
+
+    noBtn.onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
     
     // Modal close buttons
     if (closeModalBtn) {
