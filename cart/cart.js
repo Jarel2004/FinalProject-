@@ -617,3 +617,13 @@ if (historyBox) {
 
 });
 
+//akoa gi add
+document.querySelector(".manage-address-btn").addEventListener("click", () => {
+    document.getElementById("addressModal").classList.add("active");
+});
+
+document.querySelector(".close-address-btn").addEventListener("click", () => {
+    document.getElementById("addressModal").classList.remove("active");
+});
+
+
