@@ -1144,10 +1144,13 @@ header .logo h1 {
 .toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(10px);
-<<<<<<< HEAD
 }
-=======
+
+.toast.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
 }
+
 
 /* ADDRESS MODAL */
 .address-modal {
@@ -1174,4 +1177,4 @@ header .logo h1 {
     width: 350px;
     max-width: 90%;
 }
->>>>>>> 5b2a7e9b8c1a6ecdd9d1afe6770505493faf2651
+
