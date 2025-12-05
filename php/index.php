@@ -147,7 +147,7 @@ $showWelcome = isset($_GET['welcome']) && $_GET['welcome'] == '1';
                 <?php else: ?>
                     <h3 class="profile-name">Welcome, Guest!</h3>
                     <p class="profile-email">guest@kfoods.com</p>
-                    <button class="login-btn" onclick="window.location.href='log-in.php'">Sign In / Register</button>
+                    <button class="login-btn" onclick="window.location.href='./php/log-in.php'">Sign In / Register</button>
                 <?php endif; ?>
             </div>
 
@@ -173,7 +173,7 @@ $showWelcome = isset($_GET['welcome']) && $_GET['welcome'] == '1';
 
         <div class="profile-footer">
             <?php if ($user): ?>
-                <button class="logout-btn" onclick="window.location.href='logout.php'">
+                <button class="logout-btn" onclick="window.location.href='./php/logout.php'">
                     <i class="fas fa-sign-out-alt"></i> Log Out
                 </button>
             <?php endif; ?>
