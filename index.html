@@ -14,7 +14,7 @@
 
     <header>
         <div class="logo">
-            <img src="logg.png" class="brand-logo" />
+            <img src="cart/karumata.png" class="brand-logo" />
             <h1>Karu-mata</h1>
         </div>
 
@@ -93,53 +93,47 @@
 
     <div id="profile-sidebar" class="profile-sidebar">
 
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-
-            <div class="profile-info">
-                <h3 class="profile-name">Welcome, Guest!</h3>
-                <p class="profile-email">guest@kfoods.com</p>
-
-                <button class="login-btn">Sign In / Register</button>
-            </div>
-
-            <button class="close-profile">&times;</button>
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
         </div>
 
-        <div class="profile-content">
+        <div class="profile-info">
+            <h3 class="profile-name">Welcome, Guest!</h3>
+            <p class="profile-email">guest@kfoods.com</p>
 
-            <div class="profile-section">
-                <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
-                <p class="current-address">123 Main Street, Barangay 1, Manila 1000</p>
-
-                <button class="manage-address-btn">
-                    <i class="fas fa-edit"></i> Manage Addresses
-                </button>
-            </div>
-
-            <div class="profile-section">
-                <h4><i class="fas fa-history"></i> Order History</h4>
-
-                <div class="order-item">
-                    <p>Order #KFD235293 — 1 item</p>
-                    <span>P140</span>
-                </div>
-
-                <div class="order-item">
-                    <p>Order #KFD069561 — 1 item</p>
-                    <span>P140</span>
-                </div>
-
-            </div>
+            <button class="login-btn">Sign In / Register</button>
         </div>
 
-        <div class="profile-footer">
-            <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+        <button class="close-profile">&times;</button>
+    </div>
+
+    <div class="profile-content">
+
+        <div class="profile-section">
+            <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
+            <p class="current-address">No address set yet</p>
+
+            <button class="manage-address-btn">
+                <i class="fas fa-edit"></i> Manage Addresses
+            </button>
+        </div>
+
+        <div class="profile-section">
+            <h4><i class="fas fa-history"></i> Order History</h4>
+            <div id="order-history-list">
+                <!-- Injected by JS -->
+            </div>
         </div>
 
     </div>
+
+    <div class="profile-footer">
+        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+    </div>
+
+</div>
+
 
     <!-- JAVASCRIPT -->
     <script>
@@ -437,7 +431,7 @@ const products = [
         ]
     },
     {
-        id: 17,
+        id: 16,
         name: "Spicy Garlic Shrimp",
         category: ["sizzling"],
         price: 129,
@@ -458,7 +452,7 @@ const products = [
 ];
     
     
-
+    
 
 // ===========================
 // GLOBAL VARIABLES
@@ -801,32 +795,58 @@ function initializeFilters() {
 // ===========================
 // PROFILE SIDEBAR
 // ===========================
-function initializeProfileSidebar() {
+
+// ===========================
+// WORKING SIDEBAR (MATCHES CART.HTML)
+// ===========================
+document.addEventListener("DOMContentLoaded", function () {
+
     const profileToggle = document.getElementById("profile-toggle");
-    const profileSidebar = document.getElementById("profile-sidebar");
-    const closeProfile = document.querySelector(".close-profile");
+    const sidebar = document.getElementById("profile-sidebar");
+    const closeProfileBtn = document.querySelector(".close-profile");
 
-    if (profileToggle && profileSidebar) {
-        profileToggle.addEventListener("click", function(e) {
-            e.stopPropagation();
-            profileSidebar.classList.add("open");
-        });
-    }
+    // Open sidebar
+    profileToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        sidebar.classList.add("open");
+    });
 
-    if (closeProfile && profileSidebar) {
-        closeProfile.addEventListener("click", function() {
-            profileSidebar.classList.remove("open");
-        });
-    }
+    // Close when clicking X
+    closeProfileBtn.addEventListener("click", function () {
+        sidebar.classList.remove("open");
+    });
 
-    // Close profile when clicking outside
-    document.addEventListener("click", function(e) {
-        if (profileSidebar && !profileSidebar.contains(e.target) && profileToggle && !profileToggle.contains(e.target)) {
-            profileSidebar.classList.remove("open");
+    // Close when clicking outside
+    document.addEventListener("click", function (e) {
+        if (!sidebar.contains(e.target) && !profileToggle.contains(e.target)) {
+            sidebar.classList.remove("open");
         }
     });
-}
 
+    // Load saved address
+    const savedAddress = localStorage.getItem("kfoods-address") || "No address set yet";
+    document.querySelector(".current-address").textContent = savedAddress;
+
+    // Load order history
+    const historyBox = document.getElementById("order-history-list");
+    const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
+
+    if (transactions.length === 0) {
+        historyBox.innerHTML = "<p>No previous orders.</p>";
+    } else {
+        historyBox.innerHTML = transactions.map(t => `
+            <div class="order-item">
+                <p>Order #${t.id} — ${t.items.length} item(s)</p>
+                <span>P${t.total}</span>
+            </div>
+        `).join("");
+    }
+
+});
+
+
+    // Close profile when clicking outside
+   
 // ===========================
 // CART BUTTON
 // ===========================

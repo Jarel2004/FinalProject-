@@ -3,15 +3,14 @@
 // LOGOUT HANDLER
 // ============================================
 
-require_once 'config/db.php';
+require_once __DIR__ . "/config/db.php";
 
-// Initialize session
+// Start session
 initSession();
 
-// Clear user session
+// Clear user session completely
 clearUserSession();
 
 // Redirect to login page
-header('Location: log-in.php?logout=1');
+header("Location: log-in.php?logout=1");
 exit;
-?>

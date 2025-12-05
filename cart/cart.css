@@ -1144,4 +1144,34 @@ header .logo h1 {
 .toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(10px);
+<<<<<<< HEAD
 }
+=======
+}
+
+/* ADDRESS MODAL */
+.address-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.address-modal.active {
+    display: flex;
+}
+
+.address-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    max-width: 90%;
+}
+>>>>>>> 5b2a7e9b8c1a6ecdd9d1afe6770505493faf2651
