@@ -272,24 +272,31 @@ function updateCartPage() {
     }
     
     // Calculate totals
-    const subtotal = cart.reduce((total, item) => {
-        const itemPrice = item.price || products.find(p => p.id === item.id)?.price || 0;
-        const itemQuantity = item.quantity || 1;
-        return total + (itemPrice * itemQuantity);
-    }, 0);
-    
-    const deliveryFee = 50;
-    const serviceFee = 20;
-    const total = subtotal + deliveryFee + serviceFee;
-    
-    // Update display
-    cartSubtotal.textContent = `P${subtotal}`;
-    cartTotalAmount.textContent = `P${total}`;
-    
-    // Save cart to localStorage (shared with main page)
-    localStorage.setItem('kfoods-cart', JSON.stringify(cart));
-    
-    console.log("Cart updated. Subtotal:", subtotal, "Total:", total);
+const subtotal = cart.reduce((total, item) => {
+    const itemPrice = item.price || products.find(p => p.id === item.id)?.price || 0;
+    const itemQuantity = item.quantity || 1;
+    return total + (itemPrice * itemQuantity);
+}, 0);
+
+// If cart is empty → hide all values
+if (cart.length === 0) {
+    cartSubtotal.textContent = "";
+    document.getElementById("delivery-fee").textContent = "";
+    document.getElementById("service-fee").textContent = "";
+    cartTotalAmount.textContent = "";
+    return; 
+}
+
+// Normal calculation if items exist
+const deliveryFee = 50;
+const serviceFee = 20;
+const total = subtotal + deliveryFee + serviceFee;
+
+cartSubtotal.textContent = `P${subtotal}`;
+document.getElementById("delivery-fee").textContent = `P${deliveryFee}`;
+document.getElementById("service-fee").textContent = `P${serviceFee}`;
+cartTotalAmount.textContent = `P${total}`;
+
 }
 
 // Update item quantity in cart
