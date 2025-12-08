@@ -324,3 +324,23 @@ function showToast(msg) {
    START SCRIPT
 =========================================================*/
 document.addEventListener("DOMContentLoaded", initCartPage);
+
+fetch("php/save_order.php", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+        address: deliveryAddress.textContent,
+        subtotal,
+        delivery_fee,
+        service_fee,
+        total,
+        items: cart
+    })
+})
+.then(res => res.json())
+.then(data => {
+    if (data.status === "SUCCESS") {
+        console.log("Order saved!", data.order_id);
+    }
+});
+
