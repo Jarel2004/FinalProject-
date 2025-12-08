@@ -1,3 +1,10 @@
+<?php
+require "php/config.php";
+
+$isLoggedIn = isset($_SESSION["user_id"]);
+$username = $isLoggedIn ? $_SESSION["user_name"] : "Guest";
+$email = $isLoggedIn ? $_SESSION["user_email"] : "guest@kfoods.com";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -190,10 +197,6 @@
 }
 </style>
 
-<!-- ============================= -->
-<!-- PROFILE SIDEBAR (Slide Right) -->
-<!-- ============================= -->
-
 <div id="profile-sidebar" class="profile-sidebar">
 
     <div class="profile-header">
@@ -202,65 +205,29 @@
         </div>
 
         <div class="profile-info">
-            <h3 class="profile-name">Welcome, Guest!</h3>
-            <p class="profile-email">guest@kfoods.com</p>
+            <h3 class="profile-name">Welcome, <?php echo $username; ?>!</h3>
+            <p class="profile-email"><?php echo $email; ?></p>
 
-            <button class="login-btn">Sign In / Register</button>
+            <?php if (!$isLoggedIn): ?>
+                <button class="login-btn" onclick="window.location.href='log-in.php'">Sign In / Register</button>
+            <?php endif; ?>
+
+            <?php if ($isLoggedIn): ?>
+                <button class="logout-btn" onclick="window.location.href='php/logout.php'">
+                    <i class="fas fa-sign-out-alt"></i> Log Out
+                </button>
+            <?php endif; ?>
+
         </div>
 
         <button class="close-profile">&times;</button>
     </div>
 
-    <div class="profile-content">
-
-        <div class="profile-section">
-            <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
-            <p class="current-address">No address set yet</p>
-
-            <button class="manage-address-btn">
-                <i class="fas fa-edit"></i> Manage Addresses
-            </button>
-        </div>
-
-        <div class="profile-section">
-            <h4><i class="fas fa-history"></i> Order History</h4>
-            <div id="order-history-list">
-                <!-- Injected by JS -->
-            </div>
-        </div>
-
-    </div>
-
-    <div class="profile-footer">
-        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
-    </div>
-
 </div>
 
-<!-- ADDRESS MODAL FIX -->
-<div id="addressModal" class="address-modal">
-    <div class="address-modal-content">
-        <h2>Manage Address</h2>
-
-        <label>Street</label>
-        <input type="text" id="addrStreet" placeholder="Street / House No.">
-
-        <label>Barangay</label>
-        <input type="text" id="addrBarangay" placeholder="Barangay">
-
-        <label>City</label>
-        <input type="text" id="addrCity" placeholder="City">
-
-        <label>ZIP Code</label>
-        <input type="text" id="addrZip" placeholder="ZIP Code">
-
-        <button class="save-address-btn">Save</button>
-        <button class="close-address-btn">Close</button>
-    </div>
-</div>
+<script src="assets/js/cart.js"></script>
 
 
-    <script src="/assets/js/cart.js"></script>
 
 
 </body>

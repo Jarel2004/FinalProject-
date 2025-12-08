@@ -1,385 +1,218 @@
-// ===========================
-// PRODUCT DATA
-// ===========================
-const products = [
-    {
-        id: 1,
-        name: "Bibimbap",
-        category: ["best", "sizzling"],
-        price: 150,
-        image: "https://i.imgur.com/1R5U1oJ.jpeg",
-        rating: 4.8,
-        reviews: 1200,
-        orders: 1900,
-        description: "A colorful and comforting Korean rice bowl topped with seasoned vegetables, marinated beef, fried egg, and spicy gochujang sauce. Served warm and mixed just before eating.",
-        tags: ["🔥 Bestseller", "⏱ 20–30 mins", "🏷 Free utensils"],
-        spicy: "🌶 Spicy · Korean Rice Bowl",
-        addons: [
-            { name: "Extra Rice", description: "White rice", price: 20 },
-            { name: "Extra Egg", description: "Sunny side up", price: 25 },
-            { name: "Extra Cheese", description: "Mozzarella", price: 30 },
-            { name: "Kimchi Side", description: "100g portion", price: 40 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
-        ]
-    },
-    {
-        id: 2,
-        name: "Kimchi Fried Rice",
-        category: ["best"],
-        price: 140,
-        image: "https://i.imgur.com/9xZK2lM.jpeg",
-        rating: 4.7,
-        reviews: 980,
-        orders: 1500,
-        description: "Savory fried rice with tangy kimchi, vegetables, and topped with a fried egg. A perfect blend of spicy and umami flavors.",
-        tags: ["🌶 Spicy", "⏱ 15–20 mins", "🔥 Popular"],
-        spicy: "🌶 Spicy · Fried Rice",
-        addons: [
-            { name: "Extra Kimchi", description: "Fermented cabbage", price: 30 },
-            { name: "Extra Egg", description: "Sunny side up", price: 25 },
-            { name: "Pork Belly", description: "Grilled slices", price: 50 }
-        ]
-    },
-    {
-        id: 3,
-        name: "Korean Fried Chicken",
-        category: ["best", "sizzling"],
-        price: 180,
-        image: "https://i.imgur.com/5kQXzJH.jpeg",
-        rating: 4.9,
-        reviews: 2100,
-        orders: 3200,
-        description: "Crispy double-fried chicken glazed with sweet and spicy sauce. Perfectly crunchy on the outside, juicy on the inside.",
-        tags: ["🔥 #1 Bestseller", "⏱ 25–35 mins", "🎉 Fan Favorite"],
-        spicy: "🌶 Spicy · Fried Chicken",
-        addons: [
-            { name: "Extra Sauce", description: "Sweet & spicy", price: 15 },
-            { name: "Pickled Radish", description: "Traditional side", price: 20 },
-            { name: "Coleslaw", description: "Fresh salad", price: 30 },
-            { name: "Soda", description: "Regular can", price: 40 }
-        ]
-    },
-    {
-        id: 4,
-        name: "Tteokbokki",
-        category: ["sushi"],
-        price: 120,
-        image: "https://i.imgur.com/wK7xY5T.jpeg",
-        rating: 4.6,
-        reviews: 850,
-        orders: 1100,
-        description: "Chewy rice cakes in sweet and spicy gochujang sauce with fish cakes and boiled eggs. A classic Korean street food.",
-        tags: ["🌶 Very Spicy", "⏱ 15–20 mins", "🍜 Street Food"],
-        spicy: "🌶 Very Spicy · Rice Cakes",
-        addons: [
-            { name: "Extra Rice Cakes", description: "10 pieces", price: 30 },
-            { name: "Boiled Egg", description: "Soft-boiled", price: 20 },
-            { name: "Cheese Topping", description: "Melted mozzarella", price: 35 }
-        ]
-    },
-    {
-        id: 5,
-        name: "Bulgogi",
-        category: ["sizzling"],
-        price: 200,
-        image: "https://i.imgur.com/7mP3zLK.jpeg",
-        rating: 4.8,
-        reviews: 1500,
-        orders: 2000,
-        description: "Thinly sliced beef marinated in a sweet soy-based sauce, grilled to perfection. Served with rice and lettuce wraps.",
-        tags: ["🥩 Premium", "⏱ 30–40 mins", "🔥 Must Try"],
-        spicy: "🥩 Savory · Korean BBQ",
-        addons: [
-            { name: "Extra Rice", description: "White rice", price: 20 },
-            { name: "Lettuce Wraps", description: "Fresh leaves", price: 25 },
-            { name: "Ssamjang Sauce", description: "Dipping sauce", price: 15 }
-        ]
-    },
-    {
-        id: 6,
-        name: "Japchae",
-        category: ["sushi"],
-        price: 160,
-        image: "https://i.imgur.com/nQ8vR2P.jpeg",
-        rating: 4.7,
-        reviews: 920,
-        orders: 1300,
-        description: "Stir-fried glass noodles with vegetables and beef in a savory-sweet sauce. Light yet flavorful.",
-        tags: ["🥗 Healthy", "⏱ 20–25 mins", "🌿 Vegetable-Rich"],
-        spicy: "🥗 Mild · Glass Noodles",
-        addons: [
-            { name: "Extra Noodles", description: "Glass noodles", price: 35 },
-            { name: "Extra Beef", description: "Marinated slices", price: 50 },
-            { name: "Sesame Oil", description: "For extra flavor", price: 10 }
-        ]
-    }
-];
+/* ======================================================
+   LOCAL STORAGE HELPERS
+====================================================== */
 
-// ===========================
-// GLOBAL VARIABLES
-// ===========================
-let currentProduct = null;
-let modalQuantity = 1;
-
-// ===========================
-// CART MANAGEMENT
-// ===========================
 function getCart() {
-    return JSON.parse(localStorage.getItem("cart") || "[]");
+    return JSON.parse(localStorage.getItem("kfoods-cart") || "[]");
 }
 
 function saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
 }
 
 function updateCartCount() {
-    const cartCountEl = document.getElementById("cart-count");
-    if (cartCountEl) {
-        const cart = getCart();
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountEl.textContent = totalItems;
-    }
+    const cart = getCart();
+    const total = cart.reduce((n, i) => n + i.quantity, 0);
+    document.getElementById("cart-count").textContent = total;
 }
 
-// ===========================
-// RENDER PRODUCTS
-// ===========================
-function renderProducts(filter = "all") {
-    const grid = document.getElementById("products-grid");
-    if (!grid) {
-        console.error("Products grid not found!");
-        return;
-    }
-    
-    grid.innerHTML = "";
+/* ======================================================
+   SAVE PRODUCTS FOR CART PAGE
+====================================================== */
+function saveProductsToStorage() {
+    const productsForCart = products.map(p => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        description: p.description,
+        category: p.category[0],
+        bestSeller: p.category.includes("best")
+    }));
 
-    const filtered = products.filter(p => {
-        if (filter === "all") return true;
-        return p.category.includes(filter);
-    });
-
-    filtered.forEach(product => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.style.cursor = "pointer";
-        
-        card.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-content">
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description.substring(0, 80)}...</p>
-                <div class="product-price">₱${product.price.toFixed(2)}</div>
-            </div>
-        `;
-        
-        // Add click event to open modal
-        card.addEventListener("click", function() {
-            openProductModal(product.id);
-        });
-        
-        grid.appendChild(card);
-    });
-
-    console.log(`Rendered ${filtered.length} products`);
+    localStorage.setItem("kfoods-products", JSON.stringify(productsForCart));
 }
 
-// ===========================
-// PRODUCT MODAL (TEMPLATE STYLE)
-// ===========================
-function openProductModal(productId) {
-    console.log("Opening modal for product:", productId);
-    
-    currentProduct = products.find(p => p.id === productId);
-    if (!currentProduct) {
-        console.error("Product not found!");
-        return;
-    }
+/* ======================================================
+   PRODUCT MODAL
+====================================================== */
 
+let currentProduct = null;
+let modalQuantity = 1;
+
+function openProductModal(id) {
+    currentProduct = products.find(p => p.id === id);
     modalQuantity = 1;
 
-    // Remove existing modal if any
-    const existingModal = document.getElementById("productModalBackdrop");
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    // Create modal with EXACT template structure
     const modalHTML = `
-        <div id="productModalBackdrop" class="modal-backdrop show">
-            <div class="modal" onclick="event.stopPropagation()">
-                <div class="modal-header">
-                    <div class="modal-title">${currentProduct.name}</div>
-                    <button class="modal-close" onclick="closeProductModal()">&times;</button>
-                </div>
-                
-                <div class="modal-sub">
-                    ${currentProduct.spicy}
-                </div>
-                
-                <div style="margin-bottom: 12px;">
-                    <span style="color: #ffb000; font-size: 16px;">★</span>
-                    <span style="font-size: 13px; color: #777;">${currentProduct.rating} (${currentProduct.reviews.toLocaleString()} reviews)</span>
-                    <span style="font-size: 13px; color: #777;"> • </span>
-                    <span style="font-size: 13px; color: #777;">${currentProduct.orders.toLocaleString()}+ orders this week</span>
-                </div>
-                
-                <div style="font-size: 22px; font-weight: 700; color: #d32f2f; margin-bottom: 12px;">
-                    ₱${currentProduct.price.toFixed(2)}
-                </div>
-                
-                <p style="font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 12px;">
-                    ${currentProduct.description}
-                </p>
-                
-                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
-                    ${currentProduct.tags.map(tag => `<span class="info-tag">${tag}</span>`).join('')}
-                </div>
+    <div id="productModalBackdrop" class="modal-backdrop show">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">${currentProduct.name}</div>
+                <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            </div>
 
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 12px; background: #f9f9f9; border-radius: 12px;">
-                    <span style="font-size: 14px; font-weight: 500; color: #333;">Quantity</span>
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
-                        <input type="number" id="modalQtyInput" class="qty-input" value="1" min="1" readonly>
-                        <button class="qty-btn" onclick="changeModalQty(1)">+</button>
-                    </div>
-                </div>
+            <div class="modal-sub">${currentProduct.spicy}</div>
 
+            <div style="margin-bottom: 12px;">
+                <span style="color:#ffb000;">★</span>
+                ${currentProduct.rating} • ${currentProduct.reviews} reviews
+            </div>
+
+            <div class="price-display">₱${currentProduct.price}</div>
+
+            <p>${currentProduct.description}</p>
+
+            <div class="qty-box">
+                <button onclick="changeModalQty(-1)">-</button>
+                <input id="modalQtyInput" value="1" readonly>
+                <button onclick="changeModalQty(1)">+</button>
+            </div>
+
+            <h4>Add-ons</h4>
+            <ul class="addons-list">
+                ${currentProduct.addons.map((a, i) => `
+                    <li>
+                        <label>
+                            <input type="checkbox" class="addon-checkbox" data-index="${i}">
+                            ${a.name} (+₱${a.price})
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+
+            <div class="modal-footer">
                 <div>
-                    <div class="modal-section-title">Add-ons (Optional)</div>
-                    <ul class="addons-list" id="modalAddonsList">
-                        ${currentProduct.addons.map((addon, index) => `
-                            <li class="addons-item">
-                                <label>
-                                    <input type="checkbox" class="addon-checkbox" data-index="${index}" onchange="updateModalTotal()">
-                                    ${addon.name}
-                                    <small>${addon.description}</small>
-                                </label>
-                                <span>+ ₱${addon.price}</span>
-                            </li>
-                        `).join('')}
-                    </ul>
+                    <div>Total</div>
+                    <div id="modalTotalPrice">₱${currentProduct.price}</div>
                 </div>
-                
-                <div class="modal-footer">
-                    <div>
-                        <div class="total-label">Total to pay</div>
-                        <div class="total-value" id="modalTotalPrice">₱${currentProduct.price.toFixed(2)}</div>
-                    </div>
-                    <div style="display:flex; gap:8px;">
-                        <button class="btn-secondary" onclick="closeProductModal()">Cancel</button>
-                        <button class="btn btn-primary" onclick="confirmAddToCart()" style="font-size:13px;">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
+
+                <button class="btn-primary" onclick="confirmAddToCart()">Add to Cart</button>
             </div>
         </div>
+    </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Close on backdrop click
-    document.getElementById("productModalBackdrop").addEventListener("click", function(e) {
-        if (e.target.id === "productModalBackdrop") {
-            closeProductModal();
-        }
-    });
-
-    document.body.style.overflow = "hidden";
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
     updateModalTotal();
-    
-    console.log("Modal opened successfully");
 }
 
 function closeProductModal() {
-    const backdrop = document.getElementById("productModalBackdrop");
-    if (backdrop) {
-        backdrop.classList.remove("show");
-        setTimeout(() => {
-            backdrop.remove();
-        }, 300);
-        document.body.style.overflow = "auto";
-    }
-    console.log("Modal closed");
+    document.getElementById("productModalBackdrop").remove();
 }
 
-function changeModalQty(delta) {
-    modalQuantity = Math.max(1, modalQuantity + delta);
-    const qtyInput = document.getElementById("modalQtyInput");
-    if (qtyInput) {
-        qtyInput.value = modalQuantity;
-    }
+function changeModalQty(amount) {
+    modalQuantity = Math.max(1, modalQuantity + amount);
+    document.getElementById("modalQtyInput").value = modalQuantity;
     updateModalTotal();
 }
 
 function updateModalTotal() {
-    if (!currentProduct) return;
+    const addons = document.querySelectorAll(".addon-checkbox");
+    let addonTotal = 0;
 
-    let addonsTotal = 0;
-    const checkboxes = document.querySelectorAll(".addon-checkbox");
-    checkboxes.forEach(cb => {
+    addons.forEach(cb => {
         if (cb.checked) {
-            const index = parseInt(cb.dataset.index);
-            addonsTotal += currentProduct.addons[index].price;
+            const a = currentProduct.addons[cb.dataset.index];
+            addonTotal += a.price;
         }
     });
 
-    const perUnit = currentProduct.price + addonsTotal;
-    const total = perUnit * modalQuantity;
-    
-    const totalEl = document.getElementById("modalTotalPrice");
-    if (totalEl) {
-        totalEl.textContent = `₱${total.toFixed(2)}`;
-    }
+    const total = (currentProduct.price + addonTotal) * modalQuantity;
+    document.getElementById("modalTotalPrice").textContent = "₱" + total;
 }
 
+/* ======================================================
+   CONFIRM ADD TO CART
+====================================================== */
 function confirmAddToCart() {
-    if (!currentProduct) return;
-
-    let selectedAddons = [];
-    let addonsTotal = 0;
-    const checkboxes = document.querySelectorAll(".addon-checkbox");
-    checkboxes.forEach(cb => {
-        if (cb.checked) {
-            const index = parseInt(cb.dataset.index);
-            const addon = currentProduct.addons[index];
-            addonsTotal += addon.price;
-            selectedAddons.push({ name: addon.name, price: addon.price });
-        }
+    const addons = [];
+    document.querySelectorAll(".addon-checkbox:checked").forEach(cb => {
+        const a = currentProduct.addons[cb.dataset.index];
+        addons.push({ name: a.name, price: a.price });
     });
 
-    const perUnit = currentProduct.price + addonsTotal;
-
     const cart = getCart();
-    const existingIndex = cart.findIndex(item => 
-        item.id === currentProduct.id && 
-        JSON.stringify(item.addons) === JSON.stringify(selectedAddons)
-    );
 
-    if (existingIndex !== -1) {
-        cart[existingIndex].quantity += modalQuantity;
-    } else {
-        cart.push({
-            id: currentProduct.id,
-            name: currentProduct.name,
-            price: perUnit,
-            quantity: modalQuantity,
-            image: currentProduct.image,
-            addons: selectedAddons
-        });
-    }
+    cart.push({
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: currentProduct.price,
+        quantity: modalQuantity,
+        addons
+    });
 
     saveCart(cart);
     updateCartCount();
     closeProductModal();
-    showToast("✅ Successfully Added to Cart!");
-    
-    console.log("Item added to cart:", currentProduct.name);
+    showToast("Added to cart!");
 }
 
-function showToast(message) {
+/* ======================================================
+   FILTER BUTTONS
+====================================================== */
+function initializeFilters() {
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderProducts(btn.dataset.filter);
+        });
+    });
+}
+
+/* ======================================================
+   PROFILE SIDEBAR
+====================================================== */
+function initializeProfileSidebar() {
+    const toggle = document.getElementById("profile-toggle");
+    const sidebar = document.getElementById("profile-sidebar");
+    const closeBtn = document.querySelector(".close-profile");
+
+    if (!toggle || !sidebar) return;
+
+    toggle.addEventListener("click", e => {
+        e.stopPropagation();
+        sidebar.classList.add("open");
+    });
+
+    if (closeBtn)
+        closeBtn.addEventListener("click", () => sidebar.classList.remove("open"));
+
+    document.addEventListener("click", e => {
+        if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+            sidebar.classList.remove("open");
+        }
+    });
+}
+
+/* ======================================================
+   ADDRESS MODAL
+====================================================== */
+function initializeAddressModal() {
+    const btn = document.querySelector(".manage-address-btn");
+    const modal = document.getElementById("addressModal");
+    const exit = document.querySelector(".close-address-btn");
+    const save = document.querySelector(".save-address-btn");
+
+    if (!btn) return;
+
+    btn.addEventListener("click", () => modal.classList.add("active"));
+    exit.addEventListener("click", () => modal.classList.remove("active"));
+
+    save.addEventListener("click", () => {
+        const finalAddress = `${addrStreet.value}, ${addrBarangay.value}, ${addrCity.value} ${addrZip.value}`;
+        localStorage.setItem("kfoods-address", finalAddress);
+
+        document.querySelector(".current-address").textContent = finalAddress;
+        modal.classList.remove("active");
+        showToast("Address saved!");
+    });
+}
+
+/* ======================================================
+   TOAST POPUP
+====================================================== */
+function showToast(msg) {
     let toast = document.getElementById("toastNotification");
     if (!toast) {
         toast = document.createElement("div");
@@ -387,89 +220,20 @@ function showToast(message) {
         toast.className = "toast";
         document.body.appendChild(toast);
     }
-    toast.textContent = message;
+
+    toast.textContent = msg;
     toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 2800);
+    setTimeout(() => toast.classList.remove("show"), 2000);
 }
 
-// ===========================
-// FILTER FUNCTIONALITY
-// ===========================
-function initializeFilters() {
-    const filterBtns = document.querySelectorAll(".filter-btn");
-    filterBtns.forEach(btn => {
-        btn.addEventListener("click", function() {
-            filterBtns.forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
-            renderProducts(this.dataset.filter);
-        });
-    });
-}
+/* ======================================================
+   INIT
+====================================================== */
 
-// ===========================
-// PROFILE SIDEBAR
-// ===========================
-function initializeProfileSidebar() {
-    const profileToggle = document.getElementById("profile-toggle");
-    const profileSidebar = document.getElementById("profile-sidebar");
-    const closeProfile = document.querySelector(".close-profile");
-
-    if (profileToggle && profileSidebar) {
-        profileToggle.addEventListener("click", function(e) {
-            e.stopPropagation();
-            profileSidebar.classList.add("open");
-        });
-    }
-
-    if (closeProfile && profileSidebar) {
-        closeProfile.addEventListener("click", function() {
-            profileSidebar.classList.remove("open");
-        });
-    }
-
-   
-    document.addEventListener("click", function(e) {
-        if (profileSidebar && !profileSidebar.contains(e.target) && profileToggle && !profileToggle.contains(e.target)) {
-            profileSidebar.classList.remove("open");
-        }
-    });
-}
-
-function initializeCartButton() {
-    const cartButton = document.getElementById("cart-button");
-    if (cartButton) {
-        cartButton.addEventListener("click", function() {
-            const cart = getCart();
-            if (cart.length === 0) {
-                showToast("⚠️ Your cart is empty!");
-                return;
-            }
-            
-            let message = "🛒 Cart Items:\n\n";
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                message += `• ${item.name} x${item.quantity} – ₱${itemTotal.toFixed(2)}\n`;
-                if (item.addons && item.addons.length > 0) {
-                    item.addons.forEach(addon => {
-                        message += `  + ${addon.name} (₱${addon.price})\n`;
-                    });
-                }
-            });
-            message += `\n💰 Total: ₱${total.toFixed(2)}`;
-            alert(message);
-        });
-    }
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("Page loaded, initializing...");
-    renderProducts();
+document.addEventListener("DOMContentLoaded", () => {
+    saveProductsToStorage();
     updateCartCount();
     initializeFilters();
     initializeProfileSidebar();
-    initializeCartButton();
-    console.log("Initialization complete!");
+    initializeAddressModal();
 });
