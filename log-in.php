@@ -1,4 +1,40 @@
-<?php require "php/config.php"; ?>
+<?php
+require "php/config.php";
+
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
+
+    $stmt = $conn->prepare("SELECT id, fullname, email, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    // If email found
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $fullname, $emailDB, $hashedPass);
+        $stmt->fetch();
+
+        // Verify password
+        if (password_verify($password, $hashedPass)) {
+
+            $_SESSION["user_id"] = $id;
+            $_SESSION["user_name"] = $fullname;
+            $_SESSION["user_email"] = $emailDB;
+
+            header("Location: index.php");
+            exit();
+        } else {
+            $error = "Incorrect password.";
+        }
+    } else {
+        $error = "Account not found.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
