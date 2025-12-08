@@ -2,9 +2,25 @@
 require "php/config.php";
 
 $isLoggedIn = isset($_SESSION["user_id"]);
-$username = $_SESSION["user_name"] ?? "Guest";
-$email = $_SESSION["user_email"] ?? "guest@kfoods.com";
+$username = $isLoggedIn ? $_SESSION["user_name"] : "Guest";
+$email = $isLoggedIn ? $_SESSION["user_email"] : "guest@kfoods.com";
+
+// Load user address if logged in
+$address = "No address set yet";
+
+if ($isLoggedIn) {
+    $stmt = $conn->prepare("SELECT address FROM users WHERE id = ?");
+    $stmt->bind_param("i", $_SESSION["user_id"]);
+    $stmt->execute();
+    $stmt->bind_result($addr);
+    $stmt->fetch();
+
+    if (!empty($addr)) {
+        $address = $addr;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

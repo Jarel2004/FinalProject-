@@ -1,10 +1,12 @@
 <?php
 require "php/config.php";
 
-$isLoggedIn = isset($_SESSION["user_id"]);
-$username = $isLoggedIn ? $_SESSION["user_name"] : "Guest";
-$email = $isLoggedIn ? $_SESSION["user_email"] : "guest@kfoods.com";
+if (!isset($_SESSION["user_id"])) {
+    header("Location: log-in.php");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
