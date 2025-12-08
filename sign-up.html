@@ -445,6 +445,19 @@
                 window.location.href = 'verify-otp.html?email=' + encodeURIComponent(email.value) + '&ref=' + refCode;
             }
         });
+        fetch("php/register.php", {
+            method: "POST",
+            body: new FormData(form)
+        })
+        .then(res => res.text())
+        .then(data => {
+            if (data === "SUCCESS") {
+                window.location.href = "log-in.html";
+            } else if (data === "EXISTS") {
+                alert("Email already exists.");
+            }
+        });
+
 
         // Login button - redirects to log-in.html
         document.getElementById('loginBtn').addEventListener('click', () => {
