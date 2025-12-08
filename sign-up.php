@@ -1,43 +1,68 @@
 <?php
 require "php/config.php";
+session_start();
 
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $fullname = trim($_POST["fullname"]);
+
+    // Get POST values safely
+    $first = trim($_POST["first_name"]);
+    $last = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
+    $mobile = trim($_POST["mobile"]);
 
-    // Check if email already exists
-    $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
-    $check->bind_param("s", $email);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows > 0) {
-        $error = "Email is already registered.";
+    // Validate required fields
+    if (empty($first) || empty($last) || empty($email) || empty($password)) {
+        $error = "All fields are required.";
     } else {
-        // Hash the password
-        $hashedPass = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert account
-        $stmt = $conn->prepare("INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $fullname, $email, $hashedPass);
+        // Check if email already exists
+        $check = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $check->store_result();
 
-        if ($stmt->execute()) {
-            // Auto login
-            $_SESSION["user_id"] = $stmt->insert_id;
-            $_SESSION["user_name"] = $fullname;
-            $_SESSION["user_email"] = $email;
-
-            header("Location: index.php");
-            exit();
+        if ($check->num_rows > 0) {
+            $error = "Email already exists.";
         } else {
-            $error = "Registration failed.";
+
+            // Hash password
+            $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert new user
+            $stmt = $conn->prepare(
+                "INSERT INTO users (first_name, last_name, email, password, mobile)
+                 VALUES (?, ?, ?, ?, ?)"
+            );
+
+            if (!$stmt) {
+                die("SQL ERROR: " . $conn->error);
+            }
+
+            $stmt->bind_param("sssss", $first, $last, $email, $hashedPass, $mobile);
+
+            if ($stmt->execute()) {
+
+                // AUTO LOGIN
+                $_SESSION["user_id"] = $stmt->insert_id;
+                $_SESSION["user_name"] = $first . " " . $last;
+                $_SESSION["user_email"] = $email;
+
+                // Redirect to home
+                header("Location: index.php");
+                exit();
+            } else {
+                $error = "Registration failed. Try again.";
+            }
         }
     }
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -316,15 +341,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
 
       <div class="right-section">
-        <form id="registerForm">
+        <form id="registerForm" method="POST" action="sign-up.php">
           <div class="form-group">
             <label>First Name<span class="required">*</span></label>
-            <input
-              type="text"
-              id="firstName"
-              placeholder="Enter your First Name"
-              required
-            />
+            <input type="text" id="firstName" name="first_name" placeholder="Enter your First Name" required>
             <div class="error-message" id="firstNameError">
               Please enter your first name
             </div>
@@ -332,16 +352,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           <div class="form-group">
             <label>Last Name<span class="required">*</span></label>
-            <input
-              type="text"
-              id="lastName"
-              placeholder="Enter your Last Name"
-              required
-            />
+            <input type="text" id="lastName" name="last_name" placeholder="Enter your Last Name" required>
             <div class="error-message" id="lastNameError">
               Please enter your last name
             </div>
           </div>
+          <div class="form-group">
+            <label>Password <span class="required">*</span></label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+        </div>
 
           <div class="form-group">
             <label>Date of Birth<span class="required">*</span></label>
@@ -421,12 +440,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           <div class="form-group">
             <label>Email<span class="required">*</span></label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              required
-            />
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
             <div class="error-message" id="emailError">
               Please enter a valid email address
             </div>
@@ -443,30 +458,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <script>
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
+document.getElementById("registerForm").addEventListener("submit", function () {
+    
+    // Combine first + last name
+    const full = document.getElementById("firstName").value + " " +
+                 document.getElementById("lastName").value;
 
-        let data = new FormData();
-        data.append("first_name", firstName.value);
-        data.append("last_name", lastName.value);
-        data.append("email", email.value);
-        data.append("mobile", mobile.value);
-        data.append("dob", `${month.value}-${day.value}`);
-        data.append("password", "default"); // until you add password field
+    // Create hidden fullname input
+    let fullnameInput = document.createElement("input");
+    fullnameInput.type = "hidden";
+    fullnameInput.name = "fullname";
+    fullnameInput.value = full;
 
-        fetch("php/register.php", {
-          method: "POST",
-          body: data,
-        })
-          .then((res) => res.text())
-          .then((result) => {
-            if (result === "SUCCESS") {
-              window.location.href = "log-in.php";
-            } else if (result === "EXISTS") {
-              alert("This email is already registered.");
-            }
-          });
-      });
+    // Append to form
+    this.appendChild(fullnameInput);
+});
+
     </script>
   </body>
 </html>
