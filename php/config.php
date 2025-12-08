@@ -1,14 +1,14 @@
 <?php
-$host = "localhost";
-$user = "root"; 
-$pass = "";
-$dbname = "kfoods_db";
+session_start();
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "kfoods";
+
+$conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
-
-session_start();
 ?>
