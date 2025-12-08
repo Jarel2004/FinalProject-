@@ -38,7 +38,7 @@
 
             <!-- Cart Button -->
             <div class="btns">
-                <button id="cart-button" class="cart-circle" onclick="window.location.href='./cart/cart.html'">
+                <button id="cart-button" class="cart-circle" onclick="window.location.href='cart.html'">
                     <i class="fas fa-shopping-bag"></i>
                     <span id="cart-count">0</span>
                 </button>
@@ -854,7 +854,7 @@ function initializeCartButton() {
     const cartButton = document.getElementById("cart-button");
     if (cartButton) {
         cartButton.addEventListener("click", function() {
-            window.location.href = "./cart/cart.html";
+            window.location.href = "cart.html";
         });
     }
 }

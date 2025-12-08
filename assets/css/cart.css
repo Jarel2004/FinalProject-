@@ -42,9 +42,8 @@ header {
     align-items: center;
     background: linear-gradient(to right, #d32f2f, #b71c1c);
     color: white;
-    padding: 25px 1rem;
+    padding: 15px 0.8rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    height: 125px;
 }
 
 header .logo {
