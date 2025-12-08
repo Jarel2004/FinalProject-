@@ -135,21 +135,20 @@
 </div>
 
 
-    <!-- JAVASCRIPT -->
     <script>
 // ===========================
-// PRODUCT DATA (UPDATED FOR CART INTEGRATION)
+// PRODUCT DATA (CLEANED)
 // ===========================
 const products = [
     {
-         id: 1,
+        id: 1,
         name: "Bibimbap",
         price: 129,
-        category: "best",
+        category: ["best"],
         image: "src/Bibimbap.jpeg",
         rating: 4.8,
-        reviews: "1.2k",
-        orders: "1.9k+",
+        reviews: 1200,
+        orders: 1900,
         description: "A colorful and comforting Korean rice bowl topped with seasoned vegetables, marinated beef, fried egg, and spicy gochujang sauce. Served warm and mixed just before eating.",
         tags: ["🔥 Bestseller", "⏱ 20–30 mins", "🏷 Free utensils"],
         spicy: "🌶 Spicy · Korean Rice Bowl",
@@ -165,11 +164,11 @@ const products = [
         id: 2,
         name: "Pokebowl",
         price: 129,
-        category: "best",
+        category: ["best"],
         image: "src/PokeBowl.jpeg",
         rating: 4.7,
-        reviews: "920",
-        orders: "1.5k+",
+        reviews: 920,
+        orders: 1500,
         description: "Savory fried rice with tangy kimchi, vegetables, and topped with a fried egg. A perfect blend of spicy and umami flavors.",
         tags: ["🌶 Spicy", "⏱ 15–20 mins", "🔥 Popular"],
         spicy: "🌶 Spicy · Fried Rice",
@@ -199,7 +198,7 @@ const products = [
         ]
     },
     {
-         id: 4,
+        id: 4,
         name: "Porkchop w/ rice & salad",
         category: ["best"],
         price: 79,
@@ -237,7 +236,7 @@ const products = [
         ]
     },
     {
-         id: 6,
+        id: 6,
         name: "Chicken Roll Sushi",
         category: ["sushi"],
         price: 145,
@@ -336,7 +335,7 @@ const products = [
         name: "Kimbap",
         category: ["sushi"],
         price: 89,
-        image: "src/Bibimbap.jpeg",
+        image: "src/Kimbap.jpeg", // fixed image
         rating: 4.4,
         reviews: 650,
         orders: 950,
@@ -450,18 +449,15 @@ const products = [
         ]
     }
 ];
-    
-    
-    
 
 // ===========================
-// GLOBAL VARIABLES
+// GLOBALS
 // ===========================
 let currentProduct = null;
 let modalQuantity = 1;
 
 // ===========================
-// CART MANAGEMENT (UPDATED FOR CART INTEGRATION)
+// CART HELPERS
 // ===========================
 function getCart() {
     return JSON.parse(localStorage.getItem("kfoods-cart") || "[]");
@@ -477,38 +473,40 @@ function updateCartCount() {
         const cart = getCart();
         const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
         cartCountEl.textContent = totalItems || 0;
-        console.log("Cart count updated:", totalItems);
     }
 }
 
 // Save products to localStorage for cart page access
 function saveProductsToStorage() {
-    // Format products for cart page compatibility
-    const productsForCart = products.map(product => ({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        category: product.category[0] || "best",
-        bestSeller: product.category.includes("best"),
-        icon: getIconForCategory(product.category[0])
-    }));
-    
-    localStorage.setItem('kfoods-products', JSON.stringify(productsForCart));
-    console.log("Products saved to localStorage for cart page");
+    const productsForCart = products.map(product => {
+        const catArr = Array.isArray(product.category) ? product.category : [product.category];
+        const mainCat = catArr[0] || "best";
+
+        return {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            category: mainCat,
+            bestSeller: catArr.includes("best"),
+            icon: getIconForCategory(mainCat)
+        };
+    });
+
+    localStorage.setItem("kfoods-products", JSON.stringify(productsForCart));
 }
 
 // Helper function to get icon based on category
 function getIconForCategory(category) {
     const iconMap = {
-        'best': 'fas fa-star',
-        'sizzling': 'fas fa-fire',
-        'sushi': 'fas fa-sushi',
-        'meal': 'fas fa-bowl-rice',
-        'side': 'fas fa-utensil-spoon',
-        'snack': 'fas fa-mortar-pestle'
+        best: "fas fa-star",
+        sizzling: "fas fa-fire",
+        sushi: "fas fa-fish",
+        meal: "fas fa-bowl-rice",
+        side: "fas fa-utensils",
+        snack: "fas fa-mortar-pestle"
     };
-    return iconMap[category] || 'fas fa-utensils';
+    return iconMap[category] || "fas fa-utensils";
 }
 
 // ===========================
@@ -516,23 +514,21 @@ function getIconForCategory(category) {
 // ===========================
 function renderProducts(filter = "all") {
     const grid = document.getElementById("products-grid");
-    if (!grid) {
-        console.error("Products grid not found!");
-        return;
-    }
-    
+    if (!grid) return;
+
     grid.innerHTML = "";
 
     const filtered = products.filter(p => {
         if (filter === "all") return true;
-        return p.category.includes(filter);
+        const catArr = Array.isArray(p.category) ? p.category : [p.category];
+        return catArr.includes(filter);
     });
 
     filtered.forEach(product => {
         const card = document.createElement("div");
         card.className = "product-card";
         card.style.cursor = "pointer";
-        
+
         card.innerHTML = `
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" loading="lazy">
@@ -548,39 +544,32 @@ function renderProducts(filter = "all") {
                 </div>
             </div>
         `;
-        
-        // Add click event to open modal
-        card.addEventListener("click", function() {
-            openProductModal(product.id);
-        });
-        
+
+        card.addEventListener("click", () => openProductModal(product.id));
         grid.appendChild(card);
     });
-
-    console.log(`Rendered ${filtered.length} products for filter: ${filter}`);
 }
 
 // ===========================
 // PRODUCT MODAL
 // ===========================
 function openProductModal(productId) {
-    console.log("Opening modal for product:", productId);
-    
     currentProduct = products.find(p => p.id === productId);
-    if (!currentProduct) {
-        console.error("Product not found!");
-        return;
-    }
+    if (!currentProduct) return;
 
     modalQuantity = 1;
 
-    // Remove existing modal if any
     const existingModal = document.getElementById("productModalBackdrop");
-    if (existingModal) {
-        existingModal.remove();
-    }
+    if (existingModal) existingModal.remove();
 
-    // Create modal
+    const reviewsText = typeof currentProduct.reviews === "number"
+        ? currentProduct.reviews.toLocaleString()
+        : currentProduct.reviews;
+
+    const ordersText = typeof currentProduct.orders === "number"
+        ? `${currentProduct.orders.toLocaleString()}+`
+        : currentProduct.orders;
+
     const modalHTML = `
         <div id="productModalBackdrop" class="modal-backdrop show">
             <div class="modal" onclick="event.stopPropagation()">
@@ -595,9 +584,13 @@ function openProductModal(productId) {
                 
                 <div style="margin-bottom: 12px;">
                     <span style="color: #ffb000; font-size: 16px;">★</span>
-                    <span style="font-size: 13px; color: #777;">${currentProduct.rating} (${currentProduct.reviews.toLocaleString()} reviews)</span>
+                    <span style="font-size: 13px; color: #777;">
+                        ${currentProduct.rating} (${reviewsText} reviews)
+                    </span>
                     <span style="font-size: 13px; color: #777;"> • </span>
-                    <span style="font-size: 13px; color: #777;">${currentProduct.orders.toLocaleString()}+ orders this week</span>
+                    <span style="font-size: 13px; color: #777;">
+                        ${ordersText} orders this week
+                    </span>
                 </div>
                 
                 <div style="font-size: 22px; font-weight: 700; color: #d32f2f; margin-bottom: 12px;">
@@ -609,7 +602,7 @@ function openProductModal(productId) {
                 </p>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
-                    ${currentProduct.tags.map(tag => `<span class="info-tag">${tag}</span>`).join('')}
+                    ${currentProduct.tags.map(tag => `<span class="info-tag">${tag}</span>`).join("")}
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 12px; background: #f9f9f9; border-radius: 12px;">
@@ -633,7 +626,7 @@ function openProductModal(productId) {
                                 </label>
                                 <span>+ ₱${addon.price}</span>
                             </li>
-                        `).join('')}
+                        `).join("")}
                     </ul>
                 </div>
                 
@@ -653,39 +646,29 @@ function openProductModal(productId) {
         </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Close on backdrop click
-    document.getElementById("productModalBackdrop").addEventListener("click", function(e) {
-        if (e.target.id === "productModalBackdrop") {
-            closeProductModal();
-        }
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    document.getElementById("productModalBackdrop").addEventListener("click", e => {
+        if (e.target.id === "productModalBackdrop") closeProductModal();
     });
 
     document.body.style.overflow = "hidden";
     updateModalTotal();
-    
-    console.log("Modal opened for:", currentProduct.name);
 }
 
 function closeProductModal() {
     const backdrop = document.getElementById("productModalBackdrop");
     if (backdrop) {
         backdrop.classList.remove("show");
-        setTimeout(() => {
-            backdrop.remove();
-        }, 300);
+        setTimeout(() => backdrop.remove(), 300);
         document.body.style.overflow = "auto";
     }
-    console.log("Modal closed");
 }
 
 function changeModalQty(delta) {
     modalQuantity = Math.max(1, modalQuantity + delta);
     const qtyInput = document.getElementById("modalQtyInput");
-    if (qtyInput) {
-        qtyInput.value = modalQuantity;
-    }
+    if (qtyInput) qtyInput.value = modalQuantity;
     updateModalTotal();
 }
 
@@ -693,37 +676,29 @@ function updateModalTotal() {
     if (!currentProduct) return;
 
     let addonsTotal = 0;
-    const checkboxes = document.querySelectorAll(".addon-checkbox");
-    checkboxes.forEach(cb => {
+    document.querySelectorAll(".addon-checkbox").forEach(cb => {
         if (cb.checked) {
-            const index = parseInt(cb.dataset.index);
+            const index = parseInt(cb.dataset.index, 10);
             addonsTotal += currentProduct.addons[index].price;
         }
     });
 
     const perUnit = currentProduct.price + addonsTotal;
     const total = perUnit * modalQuantity;
-    
+
     const totalEl = document.getElementById("modalTotalPrice");
-    if (totalEl) {
-        totalEl.textContent = `₱${total.toFixed(2)}`;
-    }
+    if (totalEl) totalEl.textContent = `₱${total.toFixed(2)}`;
 }
 
 function confirmAddToCart() {
-    if (!currentProduct) {
-        console.error("No current product selected!");
-        return;
-    }
+    if (!currentProduct) return;
 
-    console.log("Adding to cart:", currentProduct.name);
-    
     let selectedAddons = [];
     let addonsTotal = 0;
-    const checkboxes = document.querySelectorAll(".addon-checkbox");
-    checkboxes.forEach(cb => {
+
+    document.querySelectorAll(".addon-checkbox").forEach(cb => {
         if (cb.checked) {
-            const index = parseInt(cb.dataset.index);
+            const index = parseInt(cb.dataset.index, 10);
             const addon = currentProduct.addons[index];
             addonsTotal += addon.price;
             selectedAddons.push({ name: addon.name, price: addon.price });
@@ -731,38 +706,30 @@ function confirmAddToCart() {
     });
 
     const perUnit = currentProduct.price + addonsTotal;
-
     const cart = getCart();
-    const existingIndex = cart.findIndex(item => 
-        item.id === currentProduct.id && 
-        JSON.stringify(item.addons) === JSON.stringify(selectedAddons)
+
+    const existingIndex = cart.findIndex(item =>
+        item.id === currentProduct.id &&
+        JSON.stringify(item.addons || []) === JSON.stringify(selectedAddons)
     );
 
     if (existingIndex !== -1) {
-        // Update quantity for existing item with same addons
         cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + modalQuantity;
-        console.log("Updated existing item quantity:", cart[existingIndex].quantity);
     } else {
-        // Add new item to cart
-        const cartItem = {
+        cart.push({
             id: currentProduct.id,
             name: currentProduct.name,
             price: perUnit,
             quantity: modalQuantity,
             addons: selectedAddons,
-            basePrice: currentProduct.price // Keep original price for reference
-        };
-        cart.push(cartItem);
-        console.log("Added new item to cart:", cartItem);
+            basePrice: currentProduct.price
+        });
     }
 
     saveCart(cart);
     updateCartCount();
     closeProductModal();
     showToast("✅ Successfully Added to Cart!");
-    
-    // Log cart state for debugging
-    console.log("Cart after adding:", cart);
 }
 
 function showToast(message) {
@@ -779,12 +746,12 @@ function showToast(message) {
 }
 
 // ===========================
-// FILTER FUNCTIONALITY
+// FILTERS
 // ===========================
 function initializeFilters() {
     const filterBtns = document.querySelectorAll(".filter-btn");
     filterBtns.forEach(btn => {
-        btn.addEventListener("click", function() {
+        btn.addEventListener("click", function () {
             filterBtns.forEach(b => b.classList.remove("active"));
             this.classList.add("active");
             renderProducts(this.dataset.filter);
@@ -793,142 +760,150 @@ function initializeFilters() {
 }
 
 // ===========================
-// PROFILE SIDEBAR
-// ===========================
-
-// ===========================
-// WORKING SIDEBAR (MATCHES CART.HTML)
+// PROFILE SIDEBAR (INDEX PAGE)
 // ===========================
 document.addEventListener("DOMContentLoaded", function () {
-
     const profileToggle = document.getElementById("profile-toggle");
     const sidebar = document.getElementById("profile-sidebar");
     const closeProfileBtn = document.querySelector(".close-profile");
 
-    // Open sidebar
-    profileToggle.addEventListener("click", function (e) {
+    if (!profileToggle || !sidebar || !closeProfileBtn) return;
+
+    profileToggle.addEventListener("click", e => {
         e.stopPropagation();
         sidebar.classList.add("open");
     });
 
-    // Close when clicking X
-    closeProfileBtn.addEventListener("click", function () {
+    closeProfileBtn.addEventListener("click", () => {
         sidebar.classList.remove("open");
     });
 
-    // Close when clicking outside
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", e => {
         if (!sidebar.contains(e.target) && !profileToggle.contains(e.target)) {
             sidebar.classList.remove("open");
         }
     });
 
-    // Load saved address
+    // Load address
     const savedAddress = localStorage.getItem("kfoods-address") || "No address set yet";
-    document.querySelector(".current-address").textContent = savedAddress;
+    const addressEl = document.querySelector(".current-address");
+    if (addressEl) addressEl.textContent = savedAddress;
 
     // Load order history
     const historyBox = document.getElementById("order-history-list");
-    const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
+    const transactions = JSON.parse(localStorage.getItem("kfoods-transactions") || "[]");
 
-    if (transactions.length === 0) {
-        historyBox.innerHTML = "<p>No previous orders.</p>";
-    } else {
-        historyBox.innerHTML = transactions.map(t => `
-            <div class="order-item">
-                <p>Order #${t.id} — ${t.items.length} item(s)</p>
-                <span>P${t.total}</span>
-            </div>
-        `).join("");
+    if (historyBox) {
+        if (transactions.length === 0) {
+            historyBox.innerHTML = "<p>No previous orders.</p>";
+        } else {
+            historyBox.innerHTML = transactions.map(t => `
+                <div class="order-item">
+                    <p>Order #${t.id} — ${t.items.length} item(s)</p>
+                    <span>P${t.total}</span>
+                </div>
+            `).join("");
+        }
     }
-
 });
 
-
-    // Close profile when clicking outside
-   
 // ===========================
 // CART BUTTON
 // ===========================
 function initializeCartButton() {
     const cartButton = document.getElementById("cart-button");
     if (cartButton) {
-        cartButton.addEventListener("click", function() {
+        cartButton.addEventListener("click", () => {
+            // NOTE: keep same path as your HTML inline onclick
             window.location.href = "cart.html";
         });
     }
 }
 
 // ===========================
-// INITIALIZE ON PAGE LOAD
+// MAIN INITIALIZER
 // ===========================
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("Page loaded, initializing...");
-    
-    // First, save products to localStorage for cart page
+document.addEventListener("DOMContentLoaded", function () {
     saveProductsToStorage();
-    
-    // Then initialize everything else
     renderProducts();
     updateCartCount();
     initializeFilters();
-    initializeProfileSidebar();
     initializeCartButton();
-    
-    // Debug: log initial cart state
-    console.log("Initial cart:", getCart());
-    console.log("Products saved to localStorage:", JSON.parse(localStorage.getItem('kfoods-products') || '[]').length);
-    
-    console.log("Initialization complete!");
 });
 
-// Add a global function to debug cart (useful for testing)
-window.debugCart = function() {
-    console.log("=== CART DEBUG INFO ===");
-    console.log("LocalStorage key 'kfoods-cart':", localStorage.getItem('kfoods-cart'));
-    console.log("Parsed cart:", getCart());
-    console.log("Total items in cart:", getCart().reduce((sum, item) => sum + (item.quantity || 1), 0));
-    console.log("LocalStorage key 'kfoods-products':", localStorage.getItem('kfoods-products') ? "Exists" : "Missing");
-    console.log("=== END DEBUG ===");
-};
-
-// Optional: Auto-save products periodically to ensure cart page has latest data
-setInterval(saveProductsToStorage, 30000); // Every 30 seconds
-    </script>
-    <script>
+// ===========================
+// ADDRESS MODAL (INDEX PAGE)
+// ===========================
 document.addEventListener("DOMContentLoaded", function () {
-
     const manageBtn = document.querySelector(".manage-address-btn");
     const addressModal = document.getElementById("addressModal");
     const saveBtn = document.querySelector(".save-address-btn");
     const closeBtn = document.querySelector(".close-address-btn");
 
-    // Open modal
+    if (!manageBtn || !addressModal || !saveBtn || !closeBtn) return;
+
     manageBtn.addEventListener("click", () => {
         addressModal.style.display = "flex";
     });
 
-    // Close modal
     closeBtn.addEventListener("click", () => {
         addressModal.style.display = "none";
     });
 
-    // Save address
     saveBtn.addEventListener("click", () => {
         const street = document.getElementById("addrStreet").value;
-        const brgy = document.getElementById("addrBarangay").value;
-        const city = document.getElementById("addrCity").value;
-        const zip = document.getElementById("addrZip").value;
+        const brgy   = document.getElementById("addrBarangay").value;
+        const city   = document.getElementById("addrCity").value;
+        const zip    = document.getElementById("addrZip").value;
 
-        const address = `${street}, ${brgy}, ${city} ${zip}`;
+        const address = `${street}, ${brgy}, ${city} ${zip}`.trim();
         localStorage.setItem("kfoods-address", address);
 
-        document.querySelector(".current-address").textContent = address;
+        const addressEl = document.querySelector(".current-address");
+        if (addressEl) addressEl.textContent = address || "No address set yet";
 
         addressModal.style.display = "none";
         showToast("✔ Address Saved!");
     });
 });
+
+// Debug helper
+window.debugCart = function () {
+    console.log("=== CART DEBUG INFO ===");
+    console.log("Raw localStorage:", localStorage.getItem("kfoods-cart"));
+    console.log("Parsed cart:", getCart());
+    console.log("Total items:", getCart().reduce((sum, item) => sum + (item.quantity || 1), 0));
+    console.log("Products stored:", JSON.parse(localStorage.getItem("kfoods-products") || "[]").length);
+    console.log("=== END DEBUG ===");
+};
+
+// Optional: keep products in sync
+setInterval(saveProductsToStorage, 30000);
+document.addEventListener("DOMContentLoaded", function () {
+
+    // SIGN IN / REGISTER BUTTON
+    const loginBtn = document.querySelector(".login-btn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", function () {
+            window.location.href = "log-in.html";  
+        });
+    }
+
+    // LOGOUT BUTTON
+    const logoutBtn = document.querySelector(".logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+
+            // CLEAR USER SESSION IF YOU ADD LOGIN SYSTEM LATER
+            localStorage.removeItem("kfoods-user");
+
+            // Redirect back to login page
+            window.location.href = "log-in.html";
+        });
+    }
+
+});
+
 </script>
 
 

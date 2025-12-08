@@ -1,629 +1,326 @@
-// ============================================
-// CART.JS - UPDATED VERSION
-// ============================================
+/* ======================================================
+   CLEAN & FIXED CART.JS
+   Fully compatible with cart.html  (no HTML changes required)
+=========================================================*/
 
-// Load products from localStorage (shared with main page)
-// Fallback to default products if not found
-const products = JSON.parse(localStorage.getItem('kfoods-products')) || [
-    {
-        id: 1,
-        name: "Bibimbap",
-        price: 129,
-        description: "Korean mixed rice bowl with vegetables, egg, and gochujang.",
-        category: "best",
-        bestSeller: true,
-        icon: "fas fa-bowl-rice"
-    },
-    {
-        id: 2,
-        name: "Pokebowl",
-        price: 129,
-        description: "Hawaiian bowl with fresh toppings.",
-        category: "best",
-        bestSeller: true,
-        icon: "fas fa-bowl-food"
-    },
-    {
-        id: 3,
-        name: "Stirfried Fishcake (Sweet & Spicy)",
-        price: 100,
-        description: "Korean stirfried eomuk in spicy sauce.",
-        category: "best",
-        bestSeller: true,
-        icon: "fas fa-fish"
-    },
-    {
-        id: 4,
-        name: "Porkchop w/ rice & salad",
-        price: 79,
-        description: "Grilled porkchop with rice and salad.",
-        category: "best",
-        bestSeller: true,
-        icon: "fas fa-drumstick-bite"
-    },
-    {
-        id: 5,
-        name: "Hot & spicy chicken w/ drinks",
-        price: 110,
-        description: "Spicy chicken meal with drinks.",
-        category: "best",
-        bestSeller: true,
-        icon: "fas fa-pepper-hot"
-    },
-    {
-        id: 6,
-        name: "Chicken Roll Sushi",
-        price: 145,
-        description: "Crispy chicken roll wrapped in sushi rice.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 7,
-        name: "Hot Roll Sushi",
-        price: 149,
-        description: "Spicy shrimp tempura sushi roll.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 8,
-        name: "Softshell Mango Sushi",
-        price: 149,
-        description: "Softshell crab with mango sushi.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 9,
-        name: "Mango Sushi",
-        price: 69,
-        description: "Sweet and fresh mango sushi.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 10,
-        name: "Onigiri",
-        price: 120,
-        description: "Japanese rice ball wrapped in nori.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 11,
-        name: "Kimbap",
-        price: 89,
-        description: "Korean-style maki rolls.",
-        category: "sushi",
-        bestSeller: false,
-        icon: "fas fa-sushi"
-    },
-    {
-        id: 12,
-        name: "Pork Sisig",
-        price: 129,
-        description: "Sizzling pork sisig topped with egg.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-fire"
-    },
-    {
-        id: 13,
-        name: "Pepper Steak",
-        price: 129,
-        description: "Beef steak cooked with pepper sauce.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-steak"
-    },
-    {
-        id: 14,
-        name: "Kimchi Pork",
-        price: 129,
-        description: "Sizzling pork cooked with kimchi.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-fire"
-    },
-    {
-        id: 15,
-        name: "Teriyaki",
-        price: 129,
-        description: "Sweet glazed teriyaki meat.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-bowl-food"
-    },
-    {
-        id: 16,
-        name: "Tonkatsu",
-        price: 129,
-        description: "Breaded fried pork cutlet.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-cutlet"
-    },
-    {
-        id: 17,
-        name: "Spicy Garlic Shrimp",
-        price: 129,
-        description: "Shrimp cooked in spicy garlic butter.",
-        category: "sizzling",
-        bestSeller: false,
-        icon: "fas fa-shrimp"
-    }
-];
+// Load products saved from index page (fallback if missing)
+const products = JSON.parse(localStorage.getItem("kfoods-products") || "[]");
 
-// Load cart from localStorage (shared with main page)
-let cart = JSON.parse(localStorage.getItem('kfoods-cart')) || [];
+// Load existing cart
+let cart = JSON.parse(localStorage.getItem("kfoods-cart") || "[]");
 
-// DOM Elements
-const cartPageItems = document.getElementById('cart-page-items');
-const cartPageCount = document.getElementById('cart-page-count');
-const cartSubtotal = document.getElementById('cart-subtotal');
-const cartTotalAmount = document.getElementById('cart-total-amount');
-const deliveryAddress = document.getElementById('delivery-address');
-const checkoutPageBtn = document.getElementById('checkout-page-btn');
-const clearCartPageBtn = document.getElementById('clear-cart-page-btn');
-const orderItemsList = document.getElementById('order-items-list');
-const orderTotalPrice = document.getElementById('order-total-price');
-const orderNumber = document.getElementById('order-number');
-const modal = document.getElementById('order-modal');
-const closeModalBtn = document.querySelector('.close-modal');
-const closeBtn = document.querySelector('.close-btn');
-const trackOrderBtn = document.querySelector('.track-order-btn');
+// DOM ELEMENTS
+const cartPageItems    = document.getElementById("cart-page-items");
+const cartPageCount    = document.getElementById("cart-page-count");
+const cartSubtotal     = document.getElementById("cart-subtotal");
+const cartTotalAmount  = document.getElementById("cart-total-amount");
+const deliveryAddress  = document.getElementById("delivery-address");
+const checkoutPageBtn  = document.getElementById("checkout-page-btn");
+const clearCartPageBtn = document.getElementById("clear-cart-page-btn");
+const orderItemsList   = document.getElementById("order-items-list");
+const orderTotalPrice  = document.getElementById("order-total-price");
+const orderNumber      = document.getElementById("order-number");
+const modal            = document.getElementById("order-modal");
+const closeModalBtn    = document.querySelector(".close-modal");
+const closeBtn         = document.querySelector(".close-btn");
 
-// Initialize cart page
+/* ======================================================
+   INIT CART PAGE
+=========================================================*/
 function initCartPage() {
-    console.log("Initializing cart page...");
-    console.log("Products loaded:", products.length);
-    console.log("Cart items loaded:", cart.length);
-    console.log("Cart contents:", cart);
-    
     updateCartPage();
     loadDeliveryAddress();
-    setupEventListeners();
-    console.log("Cart page initialized successfully!");
+    loadOrderHistory();
+    setupCartButtonEvents();
+    setupProfileSidebar();
+    setupAddressModal();
 }
 
-// Update cart page display
+/* ======================================================
+   RENDER CART
+=========================================================*/
 function updateCartPage() {
-    console.log("Updating cart page, items:", cart);
-    console.log("Available products:", products.length);
-    
-    // Calculate total items in cart
-    const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-    cartPageCount.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
-    
-    // Display empty cart or cart items
+    const totalItems = cart.reduce((t, item) => t + (item.quantity || 1), 0);
+    cartPageCount.textContent = `${totalItems} item${totalItems !== 1 ? "s" : ""}`;
+
     if (cart.length === 0) {
         cartPageItems.innerHTML = `
             <div class="empty-cart">
                 <i class="fas fa-shopping-basket"></i>
                 <p>Your cart is empty</p>
                 <p>Add some delicious Korean food from our menu!</p>
+            </div>`;
+        cartSubtotal.textContent = "";
+        document.getElementById("delivery-fee").textContent = "";
+        document.getElementById("service-fee").textContent = "";
+        cartTotalAmount.textContent = "";
+        return;
+    }
+
+    cartPageItems.innerHTML = "";
+
+    cart.forEach(item => {
+        const itemPrice = item.price || 0;
+        const itemQty   = item.quantity || 1;
+
+        const row = document.createElement("div");
+        row.className = "cart-page-item";
+        row.innerHTML = `
+            <div class="cart-page-item-info">
+                <h4>${item.name}</h4>
+                <p>P${itemPrice} each</p>
+                ${
+                    item.addons?.length
+                        ? `<small>Add-ons: ${item.addons.map(a => a.name).join(", ")}</small>`
+                        : ""
+                }
+            </div>
+
+            <div class="cart-page-item-controls">
+                <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
+                <span class="cart-item-quantity">${itemQty}</span>
+                <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
+                <button class="remove-item-btn" data-id="${item.id}">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="cart-page-item-total">
+                P${itemPrice * itemQty}
             </div>
         `;
-    } else {
-        cartPageItems.innerHTML = '';
-        
-        cart.forEach(item => {
-            // Find product details from products array
-            const product = products.find(p => p.id === item.id) || item;
-            
-            // Calculate price (use item price if available, otherwise use product price)
-            const itemPrice = item.price || product.price || 0;
-            const itemQuantity = item.quantity || 1;
-            const itemName = item.name || product.name || "Unknown Item";
-            
-            // Create cart item element
-            const cartItemElement = document.createElement('div');
-            cartItemElement.className = 'cart-page-item';
-            cartItemElement.innerHTML = `
-                <div class="cart-page-item-info">
-                    <h4>${itemName}</h4>
-                    <p>P${itemPrice} each</p>
-                    ${item.addons && item.addons.length > 0 ? 
-                        `<small>Add-ons: ${item.addons.map(a => a.name).join(', ')}</small>` : 
-                        ''}
-                </div>
-                <div class="cart-page-item-controls">
-                    <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
-                    <span class="cart-item-quantity">${itemQuantity}</span>
-                    <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
-                    <button class="remove-item-btn" data-id="${item.id}">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="cart-page-item-total">
-                    P${itemPrice * itemQuantity}
-                </div>
-            `;
-            cartPageItems.appendChild(cartItemElement);
-        });
-        
-        // Add event listeners to quantity buttons
-        document.querySelectorAll('.decrease-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = parseInt(this.getAttribute('data-id'));
-                updateCartQuantity(productId, -1);
-            });
-        });
-        
-        document.querySelectorAll('.increase-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = parseInt(this.getAttribute('data-id'));
-                updateCartQuantity(productId, 1);
-            });
-        });
-        
-        document.querySelectorAll('.remove-item-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = parseInt(this.getAttribute('data-id'));
-                removeFromCart(productId);
-            });
-        });
-    }
-    
-    // Calculate totals
-const subtotal = cart.reduce((total, item) => {
-    const itemPrice = item.price || products.find(p => p.id === item.id)?.price || 0;
-    const itemQuantity = item.quantity || 1;
-    return total + (itemPrice * itemQuantity);
-}, 0);
+        cartPageItems.appendChild(row);
+    });
 
-// If cart is empty → hide all values
-if (cart.length === 0) {
-    cartSubtotal.textContent = "";
-    document.getElementById("delivery-fee").textContent = "";
-    document.getElementById("service-fee").textContent = "";
-    cartTotalAmount.textContent = "";
-    return; 
+    attachCartItemEvents();
+    updateTotals();
 }
 
-// Normal calculation if items exist
-const deliveryFee = 50;
-const serviceFee = 20;
-const total = subtotal + deliveryFee + serviceFee;
+/* ======================================================
+   UPDATE TOTAL
+=========================================================*/
+function updateTotals() {
+    const subtotal = cart.reduce((t, item) => t + item.price * item.quantity, 0);
+    const deliveryFee = 50;
+    const serviceFee  = 20;
+    const total       = subtotal + deliveryFee + serviceFee;
 
-cartSubtotal.textContent = `P${subtotal}`;
-document.getElementById("delivery-fee").textContent = `P${deliveryFee}`;
-document.getElementById("service-fee").textContent = `P${serviceFee}`;
-cartTotalAmount.textContent = `P${total}`;
-
+    cartSubtotal.textContent = `P${subtotal}`;
+    document.getElementById("delivery-fee").textContent = `P${deliveryFee}`;
+    document.getElementById("service-fee").textContent  = `P${serviceFee}`;
+    cartTotalAmount.textContent = `P${total}`;
 }
 
-// Update item quantity in cart
-function updateCartQuantity(productId, change) {
-    const itemIndex = cart.findIndex(item => item.id === productId);
+/* ======================================================
+   MODIFY CART
+=========================================================*/
+function attachCartItemEvents() {
+    document.querySelectorAll(".decrease-btn").forEach(btn =>
+        btn.addEventListener("click", () => updateCartQuantity(btn.dataset.id, -1))
+    );
+    document.querySelectorAll(".increase-btn").forEach(btn =>
+        btn.addEventListener("click", () => updateCartQuantity(btn.dataset.id, 1))
+    );
+    document.querySelectorAll(".remove-item-btn").forEach(btn =>
+        btn.addEventListener("click", () => removeFromCart(btn.dataset.id))
+    );
+}
 
-    if (itemIndex === -1) return;
+function updateCartQuantity(id, change) {
+    const index = cart.findIndex(i => i.id == id);
+    if (index === -1) return;
 
-    cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + change;
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) cart.splice(index, 1);
 
-    if (cart[itemIndex].quantity <= 0) {
-        cart.splice(itemIndex, 1);
-    }
-
-    // Save updated cart
-    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
-
+    saveCart();
     updateCartPage();
 }
 
-
-// Remove item from cart
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-
-    // Save updated cart
-    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
-
+function removeFromCart(id) {
+    cart = cart.filter(i => i.id != id);
+    saveCart();
     updateCartPage();
-    showToast("Item removed from cart!");
+    showToast("Item removed!");
 }
 
-
-// Load delivery address from localStorage
-function loadDeliveryAddress() {
-    let address = localStorage.getItem("kfoods-address");
-
-    // If address exists, show it
-    if (address && address.trim() !== "") {
-        deliveryAddress.textContent = address;
-        return;
-    }
-
-    // If address NOT saved as a string, check if user saved separate components
-    const street = localStorage.getItem("kfoods-street") || "";
-    const brgy   = localStorage.getItem("kfoods-brgy") || "";
-    const city   = localStorage.getItem("kfoods-city") || "";
-    const zip    = localStorage.getItem("kfoods-zip") || "";
-
-    // If user filled fields before → rebuild address
-    if (street || brgy || city || zip) {
-        const fullAddress = `${street}, ${brgy}, ${city} ${zip}`;
-        deliveryAddress.textContent = fullAddress;
-
-        // Save final address to main key so cart reads it later
-        localStorage.setItem("kfoods-address", fullAddress);
-        return;
-    }
-
-    // Default
-    deliveryAddress.textContent = "No address set yet";
+function saveCart() {
+    localStorage.setItem("kfoods-cart", JSON.stringify(cart));
 }
 
+/* ======================================================
+   CHECKOUT FUNCTION
+=========================================================*/
+function setupCartButtonEvents() {
+    if (checkoutPageBtn) {
+        checkoutPageBtn.addEventListener("click", () => {
+            if (!cart.length) return alert("Your cart is empty!");
 
-// Setup event listeners
-function setupEventListeners() {
-    // Checkout button
-    checkoutPageBtn.addEventListener('click', function() {
-        console.log("Checkout button clicked");
-        
-        if (cart.length === 0) {
-            alert('Your cart is empty. Add some items before checking out!');
-            return;
-        }
-        
-       const address = localStorage.getItem("kfoods-address");
+            if (!localStorage.getItem("kfoods-address")) {
+                showToast("Set your delivery address first.");
+                return;
+            }
 
-        if (!address) {
-            showToast("Please set a delivery address first. You can add one from your profile.");
-            return;
-        }
+            showOrderConfirmation();
+        });
+    }
 
+    if (clearCartPageBtn) {
+        clearCartPageBtn.addEventListener("click", () => {
+            cart = [];
+            saveCart();
+            updateCartPage();
+            showToast("Cart cleared!");
+        });
+    }
 
-        
-        showOrderConfirmation();
-    });
-    
-    // Clear cart button
-    clearCartPageBtn.addEventListener('click', function() {
-        if (cart.length === 0) {
-            alert('Your cart is already empty!');
-            return;
-        }
-        
-        cart = [];
-        localStorage.setItem("kfoods-cart", JSON.stringify(cart));
-        updateCartPage();
-        showToast("Cart cleared!");
+    if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+    if (closeBtn)      closeBtn.addEventListener("click", closeModal);
+}
 
-    });
-    function showConfirm(message, onYes) {
-    const modal = document.getElementById("confirm-modal");
-    const msg = document.getElementById("confirm-message");
-    const yesBtn = document.getElementById("confirm-yes");
-    const noBtn = document.getElementById("confirm-no");
+function showOrderConfirmation() {
+    const subtotal = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+    const total = subtotal + 70;
 
-    msg.textContent = message;
+    orderNumber.textContent = Math.floor(10000 + Math.random() * 90000);
+    orderTotalPrice.textContent = `P${total}`;
+
+    orderItemsList.innerHTML = cart
+        .map(i => `
+            <div>
+                ${i.quantity}x ${i.name} — P${i.price * i.quantity}
+            </div>
+        `)
+        .join("");
+
+    saveTransaction();
     modal.style.display = "flex";
 
-    yesBtn.onclick = () => {
-        modal.style.display = "none";
-        onYes();
-    };
-
-    noBtn.onclick = () => {
-        modal.style.display = "none";
-    };
-}
-
-    
-    // Modal close buttons
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeModal);
-    }
-    
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-    }
-    
-    // Track order button
-    if (trackOrderBtn) {
-        trackOrderBtn.addEventListener('click', function() {
-            alert('Order tracking feature would be implemented here!\n\nYour order is being prepared and will be ready soon.');
-        });
-    }
-    
-    // Close modal on backdrop click
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-    }
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
-            closeModal();
-        }
-    });
-    
-    console.log("Event listeners setup complete");
-}
-
-// Show order confirmation modal
-function showOrderConfirmation() {
-    console.log("Showing order confirmation");
-    
-    const orderNum = Math.floor(10000 + Math.random() * 90000);
-    orderNumber.textContent = orderNum;
-    
-    // Calculate totals
-    const subtotal = cart.reduce((total, item) => {
-        const itemPrice = item.price || products.find(p => p.id === item.id)?.price || 0;
-        const itemQuantity = item.quantity || 1;
-        return total + (itemPrice * itemQuantity);
-    }, 0);
-    
-    const deliveryFee = 50;
-    const serviceFee = 20;
-    const total = subtotal + deliveryFee + serviceFee;
-    
-    orderTotalPrice.textContent = `P${total}`;
-    
-    // Display order items
-    orderItemsList.innerHTML = '';
-    cart.forEach((item, index) => {
-        const product = products.find(p => p.id === item.id) || item;
-        const itemPrice = item.price || product.price || 0;
-        const itemQuantity = item.quantity || 1;
-        const itemName = item.name || product.name || "Unknown Item";
-        
-        const orderItem = document.createElement('div');
-        orderItem.className = 'order-item';
-        orderItem.style.animationDelay = `${(index + 1) * 0.1}s`;
-        orderItem.innerHTML = `
-            <div class="item-name">${itemName}</div>
-            <div class="item-details">
-                <div class="item-quantity">${itemQuantity}x</div>
-                <div class="item-price">P${itemPrice * itemQuantity}</div>
-            </div>
-        `;
-        orderItemsList.appendChild(orderItem);
-    });
-    
-    // Show modal
-    if (modal) {
-        modal.style.display = 'flex';
-    }
-    
-    // Save transaction and clear cart
-    saveTransaction([...cart]);
     cart = [];
+    saveCart();
     updateCartPage();
-    
-    console.log("Order confirmed. Order number:", orderNum);
 }
 
-// Close modal
 function closeModal() {
-    if (modal) {
-        modal.style.display = 'none';
-        console.log("Modal closed");
-    }
+    modal.style.display = "none";
 }
 
-// Save transaction to localStorage
-function saveTransaction(orderData) {
-    const transactions = JSON.parse(localStorage.getItem('kfoods-transactions')) || [];
-    
-    // Calculate transaction total
-    const subtotal = orderData.reduce((total, item) => {
-        const itemPrice = item.price || products.find(p => p.id === item.id)?.price || 0;
-        const itemQuantity = item.quantity || 1;
-        return total + (itemPrice * itemQuantity);
-    }, 0);
-    
-    const transaction = {
-        id: 'KFD' + Date.now().toString().slice(-6),
+/* ======================================================
+   ORDER HISTORY STORAGE
+=========================================================*/
+function saveTransaction() {
+    const tx = JSON.parse(localStorage.getItem("kfoods-transactions") || "[]");
+
+    tx.unshift({
+        id: "KFD" + Date.now().toString().slice(-6),
         date: new Date().toISOString(),
-        items: [...orderData],
-        subtotal: subtotal,
-        deliveryFee: 50,
-        serviceFee: 20,
-        total: subtotal + 70, // Add fees
-        status: 'completed'
-    };
-    
-    transactions.unshift(transaction);
-    localStorage.setItem('kfoods-transactions', JSON.stringify(transactions));
-    
-    console.log("Transaction saved:", transaction.id);
+        items: [...cart],
+        total: cart.reduce((t, i) => t + i.price * i.quantity, 0) + 70
+    });
+
+    localStorage.setItem("kfoods-transactions", JSON.stringify(tx));
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initCartPage);
+function loadOrderHistory() {
+    const box = document.getElementById("order-history-list");
+    const tx = JSON.parse(localStorage.getItem("kfoods-transactions") || "[]");
 
-// Also update cart count on page if cart count element exists (for consistency)
-document.addEventListener('DOMContentLoaded', function() {
-    // Update cart count badge if exists on this page
-    const cartCountBadge = document.getElementById('cart-count');
-    if (cartCountBadge) {
-        const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-        cartCountBadge.textContent = totalItems;
-    }
-});
+    if (!box) return;
 
-function showToast(message) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2000);
+    box.innerHTML =
+        tx.length === 0
+            ? "<p>No previous orders.</p>"
+            : tx
+                  .map(
+                      t => `
+                <div class="order-item">
+                    <p><strong>Order #${t.id}</strong></p>
+                    <p>${t.items.length} items</p>
+                    <p>Total: P${t.total}</p>
+                </div>
+            `
+                  )
+                  .join("");
 }
-// ===========================
-// PROFILE SIDEBAR FOR CART PAGE
-// ===========================
 
-document.addEventListener("DOMContentLoaded", function () {
+/* ======================================================
+   DELIVERY ADDRESS
+=========================================================*/
+function loadDeliveryAddress() {
+    deliveryAddress.textContent =
+        localStorage.getItem("kfoods-address") || "No address set yet";
+}
 
-    const profileToggle = document.getElementById("profile-toggle");
-    const sidebar = document.getElementById("profile-sidebar");
-    const closeProfileBtn = document.querySelector(".close-profile");
+/* ======================================================
+   PROFILE SIDEBAR (FULLY FIXED)
+=========================================================*/
+function setupProfileSidebar() {
+    const toggle   = document.getElementById("profile-toggle");
+    const sidebar  = document.getElementById("profile-sidebar");
+    const closeBtn = document.querySelector(".close-profile");
 
-    if (!profileToggle || !sidebar) {
-        console.warn("Profile sidebar elements not found on cart page.");
-        return;
-    }
+    if (!toggle || !sidebar) return;
 
-    // Open sidebar
-    profileToggle.addEventListener("click", function (e) {
+    // OPEN
+    toggle.addEventListener("click", e => {
         e.stopPropagation();
         sidebar.classList.add("open");
     });
 
-    // Close sidebar
-    closeProfileBtn.addEventListener("click", function () {
-        sidebar.classList.remove("open");
-    });
+    // CLOSE via X button
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => sidebar.classList.remove("open"));
+    }
 
-    // Close when clicking outside
-    document.addEventListener("click", function (e) {
-        if (!sidebar.contains(e.target) && !profileToggle.contains(e.target)) {
+    // CLICK OUTSIDE
+    document.addEventListener("click", e => {
+        if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
             sidebar.classList.remove("open");
         }
     });
-
-    // SIMPLE FIXED ORDER HISTORY LOADER
-const historyBox = document.getElementById("order-history-list");
-const transactions = JSON.parse(localStorage.getItem("kfoods-transactions")) || [];
-
-if (historyBox) {
-    if (transactions.length === 0) {
-        historyBox.innerHTML = "<p>No previous orders.</p>";
-    } else {
-        historyBox.innerHTML = transactions.map(t => `
-            <div class="order-item">
-                <p><strong>Order #${t.id}</strong></p>
-                <p>${t.items.length} item(s)</p>
-                <p>Total: P${t.total}</p>
-            </div>
-        `).join("");
-    }
 }
 
-});
+/* ======================================================
+   ADDRESS MODAL (CART PAGE)
+=========================================================*/
+function setupAddressModal() {
+    const manageBtn = document.querySelector(".manage-address-btn");
+    const addressModal = document.getElementById("addressModal");
+    const saveBtn = document.querySelector(".save-address-btn");
+    const closeBtn = document.querySelector(".close-address-btn");
 
-//akoa gi add
-document.querySelector(".manage-address-btn").addEventListener("click", () => {
-    document.getElementById("addressModal").classList.add("active");
-});
+    if (!manageBtn || !addressModal) return;
 
-document.querySelector(".close-address-btn").addEventListener("click", () => {
-    document.getElementById("addressModal").classList.remove("active");
-});
+    manageBtn.addEventListener("click", () => {
+        addressModal.classList.add("active");
+    });
 
+    if (closeBtn)
+        closeBtn.addEventListener("click", () => {
+            addressModal.classList.remove("active");
+        });
 
+    if (saveBtn)
+        saveBtn.addEventListener("click", () => {
+            const address = `${addrStreet.value}, ${addrBarangay.value}, ${addrCity.value} ${addrZip.value}`;
+            localStorage.setItem("kfoods-address", address);
+            deliveryAddress.textContent = address;
+            addressModal.classList.remove("active");
+            showToast("Address saved!");
+        });
+}
+
+/* ======================================================
+   TOASTS
+=========================================================*/
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* ======================================================
+   START SCRIPT
+=========================================================*/
+document.addEventListener("DOMContentLoaded", initCartPage);
