@@ -40,11 +40,10 @@ if (!isset($_SESSION["user_id"])) {
             </div>
 
             <div class="btns">
-                <a href="/index.html" class="back-to-menu-btn">
+                <a href="index.php" class="back-to-menu-btn">  <!-- Changed from /index.html -->
                     <i class="fas fa-arrow-left"></i>
                     <span>Back to Menu</span>
                 </a>
-
                 <button id="profile-toggle" class="profile-circle">
                     <i class="fas fa-user"></i>
                 </button>
@@ -113,11 +112,9 @@ if (!isset($_SESSION["user_id"])) {
                         <button class="cart-btn clear-cart-btn" id="clear-cart-page-btn">
                             <i class="fas fa-trash-alt"></i> Clear Cart
                         </button>
-                        <a href="/index.html" class="cart-btn continue-shopping-btn">
+                        <a href="index.php" class="cart-btn continue-shopping-btn">  <!-- Changed from /index.html -->
                             <i class="fas fa-utensils"></i> Continue Shopping
                         </a>
-
-
                     </div>
                 </div>
             </div>
@@ -223,6 +220,22 @@ if (!isset($_SESSION["user_id"])) {
         </div>
 
         <button class="close-profile">&times;</button>
+    </div>
+    <div class="profile-content">
+        <div class="profile-section">
+            <h4><i class="fas fa-map-marker-alt"></i> Delivery Location</h4>
+            <p class="current-address" id="cart-profile-address">No address set yet</p>
+            <button class="manage-address-btn" onclick="openAddressModal()">
+                <i class="fas fa-edit"></i> Manage Addresses
+            </button>
+        </div>
+
+        <div class="profile-section">
+            <h4><i class="fas fa-history"></i> Order History</h4>
+            <div id="order-history-list">
+                <!-- Order history will be loaded here -->
+            </div>
+        </div>
     </div>
 
 </div>

@@ -1,7 +1,9 @@
 <?php
+// FINALPROJECT/logout.php
 session_start();
 session_unset();
 session_destroy();
-header("Location: log-in.php");
+
+header("Location: index.php");
 exit();
 ?>

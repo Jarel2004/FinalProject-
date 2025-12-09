@@ -84,10 +84,10 @@ if ($isLoggedIn) {
 
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="best-seller">Best Sellers</button>
+                <button class="filter-btn" name="best-seller" data-filter="best-seller">Best Sellers</button>
 
-                <button class="filter-btn" data-filter="sushi">Sushi</button>
-                <button class="filter-btn" data-filter="sizzling">Sizzling</button>
+                <button class="filter-btn" name="sushi" data-filter="sushi">Sushi</button>
+                <button class="filter-btn" name="sizzling" data-filter="sizzling">Sizzling</button>
             </div>
 
         </div>

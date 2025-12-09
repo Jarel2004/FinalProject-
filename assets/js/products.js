@@ -1,299 +1,189 @@
-// =====================================================
-// PRODUCT DATA (updated, consistent categories)
-// =====================================================
+// assets/js/products.js
+document.addEventListener('DOMContentLoaded', function() {
+    const productsGrid = document.getElementById('products-grid');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cartCount = document.getElementById('cart-count');
+    
+    // Sample products data (in real app, fetch from database)
+    const products = [
+        // SUSHI
+        { id: 1, name: 'Chicken Roll', price: 145, category: 'sushi', image: 'placeholder.jpg', isBestSeller: false, description: 'Delicious chicken sushi roll with special sauce' },
+        { id: 2, name: 'Hot Roll', price: 149, category: 'sushi', image: 'placeholder.jpg', isBestSeller: false, description: 'Spicy sushi roll with assorted fillings' },
+        { id: 3, name: 'Softshell Mango', price: 149, category: 'sushi', image: 'placeholder.jpg', isBestSeller: true, description: 'Softshell crab with fresh mango slices' },
+        { id: 4, name: 'Mango Sushi', price: 69, category: 'sushi', image: 'placeholder.jpg', isBestSeller: false, description: 'Fresh mango with sushi rice and seafood' },
+        { id: 5, name: 'Onigiri', price: 120, category: 'sushi', image: 'placeholder.jpg', isBestSeller: false, description: 'Traditional Japanese rice ball with various fillings' },
+        { id: 6, name: 'Kimbap', price: 89, category: 'sushi', image: 'placeholder.jpg', isBestSeller: true, description: 'Korean rice rolls with vegetables and meat' },
+        
+        // SIZZLING
+        { id: 7, name: 'Pork Sisig', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: true, description: 'Sizzling pork sisig with egg and calamansi' },
+        { id: 8, name: 'Pepper Steak', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: false, description: 'Sizzling pepper steak with vegetables' },
+        { id: 9, name: 'Kimchi Pork', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: false, description: 'Sizzling pork with kimchi and spices' },
+        { id: 10, name: 'Teriyaki', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: false, description: 'Sizzling teriyaki chicken with sauce' },
+        { id: 11, name: 'Tonkatsu', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: false, description: 'Sizzling breaded pork cutlet with sauce' },
+        { id: 12, name: 'Spicy Garlic Shrimp', price: 129, category: 'sizzling', image: 'placeholder.jpg', isBestSeller: true, description: 'Sizzling shrimp in spicy garlic sauce' },
+        
+        // BEST SELLERS
+        { id: 13, name: 'POKEBOWL', price: 129, category: 'best-seller', image: 'placeholder.jpg', isBestSeller: true, description: 'Fresh poke bowl with tuna, salmon, and toppings' },
+        { id: 14, name: 'BIBIMBAP', price: 129, category: 'best-seller', image: 'placeholder.jpg', isBestSeller: true, description: 'Korean mixed rice with vegetables and meat' },
+        { id: 15, name: 'Stirfried Fishcake sweet & spicy', price: 100, category: 'best-seller', image: 'placeholder.jpg', isBestSeller: true, description: 'Korean fishcake stir-fried in sweet & spicy sauce' },
+        { id: 16, name: 'Porkchop w/rice & salad', price: 79, category: 'best-seller', image: 'placeholder.jpg', isBestSeller: true, description: 'Grilled porkchop served with rice and fresh salad' },
+        { id: 17, name: 'Hot & spicy chicken w/drinks', price: 110, category: 'best-seller', image: 'placeholder.jpg', isBestSeller: true, description: 'Korean-style spicy chicken served with drinks' }
+    ];
 
-const products = [
-     {
-    id: 1,
-    name: "Chicken Roll",
-    category: ["sushi"],
-    price: 145,
-    image: "assets/src/Chicken_Roll.jpeg",
-    rating: 4.5,
-    reviews: 200,
-    orders: 500,
-    description: "Crispy chicken sushi roll.",
-    tags: ["KR Korean", "🍣 Sushi"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 2,
-    name: "Hot Roll",
-    category: ["sushi"],
-    price: 149,
-    image: "assets/src/Hot_Roll.jpeg",
-    rating: 4.6,
-    reviews: 210,
-    orders: 520,
-    description: "Deep-fried hot sushi roll.",
-    tags: ["KR Korean", "🍤 Fried"],
-    spicy: "Mild",
-    addons: []
-  },
-  {
-    id: 3,
-    name: "Softshell Mango",
-    category: ["sushi"],
-    price: 149,
-    image: "assets/src/Softshell_Mango.jpeg",
-    rating: 4.7,
-    reviews: 180,
-    orders: 480,
-    description: "Softshell crab roll with mango.",
-    tags: ["KR Korean", "🍤 Crab"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 4,
-    name: "Mango Sushi",
-    category: ["sushi"],
-    price: 69,
-    image: "assets/src/Mango.jpeg",
-    rating: 4.3,
-    reviews: 150,
-    orders: 450,
-    description: "Sweet and fresh mango sushi.",
-    tags: ["Sweet", "Light meal"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 5,
-    name: "Onigiri",
-    category: ["sushi"],
-    price: 120,
-    image: "assets/src/Onigiri.jpeg",
-    rating: 4.4,
-    reviews: 160,
-    orders: 400,
-    description: "Japanese rice ball with fillings.",
-    tags: ["Japanese", "Rice"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 6,
-    name: "Bibimbap",
-    category: ["sushi"],
-    price: 89,
-    image: "assets/src/Bibimbap.jpeg",
-    rating: 4.4,
-    reviews: 650,
-    orders: 950,
-    description: "Korean-style maki rolls with vegetables and seaweed.",
-    tags: ["KR Korean", "⏱️ 10–15 mins", "🍙 Rice Rolls"],
-    spicy: "Not spicy",
-    addons: [
-      { name: "Extra Kimbap", description: "4 pieces", price: 40 },
-      { name: "Pickled Radish", description: "Danmuji", price: 15 },
-      { name: "Korean Tea", description: "Boricha", price: 20 },
-      { name: "Sesame Oil", description: "Dipping sauce", price: 10 }
-    ]
-  },
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Update cart count
+    function updateCartCount() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+    }
 
-  // ============================
-  // 🔥 SIZZLING
-  // ============================
-  {
-    id: 7,
-    name: "Pork Sisig",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/Pork_Sisig.jpeg",
-    rating: 4.6,
-    reviews: 300,
-    orders: 800,
-    description: "Classic pork sisig sizzling plate.",
-    tags: ["Filipino", "Sizzling"],
-    spicy: "Mild",
-    addons: []
-  },
-  {
-    id: 8,
-    name: "Pepper Steak",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/PepperSteak.jpeg",
-    rating: 4.5,
-    reviews: 250,
-    orders: 700,
-    description: "Beef steak with pepper sauce.",
-    tags: ["Beef", "Sizzling"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 9,
-    name: "Kimchi Pork",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/Kimchi_Pork.jpeg",
-    rating: 4.6,
-    reviews: 270,
-    orders: 730,
-    description: "Pork cooked with Korean kimchi.",
-    tags: ["KR Korean", "Spicy"],
-    spicy: "Medium",
-    addons: []
-  },
-  {
-    id: 10,
-    name: "Teriyaki",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/TeriyakiSizzling.jpeg",
-    rating: 4.5,
-    reviews: 260,
-    orders: 720,
-    description: "Japanese-style sweet teriyaki dish.",
-    tags: ["Japanese", "Sweet"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 11,
-    name: "Tonkatsu",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/Porkchop.jpeg",
-    rating: 4.5,
-    reviews: 230,
-    orders: 680,
-    description: "Crispy pork cutlet with sauce.",
-    tags: ["Japanese", "Fried"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 12,
-    name: "Spicy Garlic Shrimp",
-    category: ["sizzling"],
-    price: 129,
-    image: "assets/src/SpicyGarlicShrimp.jpeg",
-    rating: 4.7,
-    reviews: 310,
-    orders: 820,
-    description: "Shrimp sautéed with spicy garlic sauce.",
-    tags: ["Seafood", "Garlic", "Spicy"],
-    spicy: "Hot",
-    addons: []
-  },
-
-  // ============================
-  // ⭐ BEST SELLER
-  // ============================
-  {
-    id: 13,
-    name: "Pokebowl",
-    category: ["best-seller"],
-    price: 129,
-    image: "assets/src/Pokebowl.jpeg",
-    rating: 4.8,
-    reviews: 500,
-    orders: 1200,
-    description: "Hawaiian-style poke bowl.",
-    tags: ["Fresh", "Healthy"],
-    spicy: "Optional",
-    addons: []
-  },
-  {
-    id: 14,
-    name: "Bibimbap",
-    category: ["best-seller"],
-    price: 129,
-    image: "assets/src/Bibimbap.jpeg",
-    rating: 4.8,
-    reviews: 540,
-    orders: 1300,
-    description: "Korean mixed rice with vegetables and meat.",
-    tags: ["KR Korean", "Rice bowl"],
-    spicy: "Optional",
-    addons: []
-  },
-  {
-    id: 15,
-    name: "Stirfried Fishcake Sweet & Spicy",
-    category: ["best-seller"],
-    price: 100,
-    image: "assets/src/Stirfried_Fishcake.jpeg",
-    rating: 4.6,
-    reviews: 300,
-    orders: 900,
-    description: "Korean fishcake stir-fry with sweet & spicy sauce.",
-    tags: ["KR Korean", "Sweet & Spicy"],
-    spicy: "Medium",
-    addons: []
-  },
-  {
-    id: 16,
-    name: "Porkchop w/ Rice & Salad",
-    category: ["best-seller"],
-    price: 79,
-    image: "assets/src/Porkchop.jpeg",
-    rating: 4.4,
-    reviews: 250,
-    orders: 850,
-    description: "Seasoned porkchop served with rice and salad.",
-    tags: ["Filipino", "Meal"],
-    spicy: "Not spicy",
-    addons: []
-  },
-  {
-    id: 17,
-    name: "Hot & Spicy Chicken w/ Drinks",
-    category: ["best-seller"],
-    price: 110,
-    image: "assets/src/H&S_Chicken.jpeg",
-    rating: 4.5,
-    reviews: 320,
-    orders: 910,
-    description: "Spicy chicken meal with drink included.",
-    tags: ["Chicken", "Spicy"],
-    spicy: "Hot",
-    addons: []
-  }
-];
-
-    // You can add the rest of your items here exactly the same way...
-
-
-// =====================================================
-// RENDER PRODUCTS
-// =====================================================
-
-function renderProducts(filter = "all") {
-    const grid = document.getElementById("products-grid");
-    grid.innerHTML = "";
-
-    const filtered = products.filter(p => filter === "all" || p.category.includes(filter));
-
-    filtered.forEach(product => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-
-        card.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-content">
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description.substring(0, 70)}...</p>
-                <div class="product-footer">
-                    <div class="product-price">₱${product.price}</div>
-                    <button class="add-btn" onclick="event.stopPropagation(); openProductModal(${product.id})">
-                        + Add
-                    </button>
+    // Render products
+    function renderProducts(filter = 'all') {
+        productsGrid.innerHTML = '';
+        
+        let filteredProducts = products;
+        
+        if (filter === 'best-seller') {
+            filteredProducts = products.filter(p => p.isBestSeller);
+        } else if (filter !== 'all') {
+            filteredProducts = products.filter(p => p.category === filter);
+        }
+        
+        filteredProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            // Add best seller badge if applicable
+            const bestSellerBadge = product.isBestSeller ? 
+                '<div class="best-seller-badge"><i class="fas fa-crown"></i> Best Seller</div>' : '';
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="assets/images/${product.image}" alt="${product.name}">
+                    ${bestSellerBadge}
                 </div>
-            </div>
-        `;
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-desc">${product.description}</p>
+                    <div class="product-footer">
+                        <span class="product-price">P${product.price.toFixed(2)}</span>
+                        <button class="add-to-cart-btn" data-id="${product.id}">
+                            <i class="fas fa-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            productsGrid.appendChild(productCard);
+        });
+        
+        // Add event listeners to add-to-cart buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = parseInt(this.getAttribute('data-id'));
+                addToCart(productId);
+            });
+        });
+    }
 
-        card.addEventListener("click", () => openProductModal(product.id));
-        grid.appendChild(card);
+    // Add to cart function
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        
+        if (!product) return;
+        
+        // Check if product already in cart
+        const existingItem = cart.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: productId,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                addons: []
+            });
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Update cart count
+        updateCartCount();
+        
+        // Show notification
+        showToast(`${product.name} added to cart!`);
+    }
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Filter products
+            const filter = this.getAttribute('data-filter');
+            renderProducts(filter);
+        });
     });
-}
 
-document.addEventListener("DOMContentLoaded", () => {
+    // Toast notification function
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Add CSS for toast animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        .best-seller-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #FFD700;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initial render
     renderProducts();
+    updateCartCount();
 });

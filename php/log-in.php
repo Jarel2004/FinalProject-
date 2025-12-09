@@ -1,8 +1,8 @@
+// FINALPROJECT/php/login_handler.php (for AJAX login if needed)
 <?php
 require "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    
     $email = $_POST["email"];
     $password = $_POST["password"];
 
@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    // Save user session
     $_SESSION["user_id"] = $user["user_id"];
-    $_SESSION["user_name"] = $user["first_name"];
+    $_SESSION["user_name"] = $user["first_name"] . " " . $user["last_name"];
+    $_SESSION["user_email"] = $user["email"];
 
     echo "SUCCESS";
 }
