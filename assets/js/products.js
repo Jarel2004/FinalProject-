@@ -3,88 +3,261 @@
 // =====================================================
 
 const products = [
-    {
-        id: 1,
-        name: "Bibimbap",
-        price: 129,
-        category: ["best"],
-        image: "src/Bibimbap.jpeg",
-        rating: 4.8,
-        reviews: 1200,
-        orders: 1900,
-        description: "A colorful Korean rice bowl with vegetables, beef, egg, and gochujang.",
-        tags: ["🔥 Bestseller", "⏱ 20–30 mins", "🏷 Free utensils"],
-        spicy: "🌶 Spicy · Korean Rice Bowl",
-        addons: [
-            { name: "Extra Rice", description: "White rice", price: 20 },
-            { name: "Extra Egg", description: "Sunny side up", price: 25 },
-            { name: "Extra Cheese", description: "Mozzarella", price: 30 },
-            { name: "Kimchi Side", description: "100g portion", price: 40 },
-            { name: "Iced Tea", description: "Regular glass", price: 35 }
-        ]
-    },
+     {
+    id: 1,
+    name: "Chicken Roll",
+    category: ["sushi"],
+    price: 145,
+    image: "src/Chicken_Roll.jpeg",
+    rating: 4.5,
+    reviews: 200,
+    orders: 500,
+    description: "Crispy chicken sushi roll.",
+    tags: ["KR Korean", "🍣 Sushi"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 2,
+    name: "Hot Roll",
+    category: ["sushi"],
+    price: 149,
+    image: "src/Hot_Roll.jpeg",
+    rating: 4.6,
+    reviews: 210,
+    orders: 520,
+    description: "Deep-fried hot sushi roll.",
+    tags: ["KR Korean", "🍤 Fried"],
+    spicy: "Mild",
+    addons: []
+  },
+  {
+    id: 3,
+    name: "Softshell Mango",
+    category: ["sushi"],
+    price: 149,
+    image: "src/Softshell_Mango.jpeg",
+    rating: 4.7,
+    reviews: 180,
+    orders: 480,
+    description: "Softshell crab roll with mango.",
+    tags: ["KR Korean", "🍤 Crab"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 4,
+    name: "Mango Sushi",
+    category: ["sushi"],
+    price: 69,
+    image: "src/Mango.jpeg",
+    rating: 4.3,
+    reviews: 150,
+    orders: 450,
+    description: "Sweet and fresh mango sushi.",
+    tags: ["Sweet", "Light meal"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 5,
+    name: "Onigiri",
+    category: ["sushi"],
+    price: 120,
+    image: "src/Onigiri.jpeg",
+    rating: 4.4,
+    reviews: 160,
+    orders: 400,
+    description: "Japanese rice ball with fillings.",
+    tags: ["Japanese", "Rice"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 6,
+    name: "Kimbap",
+    category: ["sushi"],
+    price: 89,
+    image: "src/Kimbap.jpeg",
+    rating: 4.4,
+    reviews: 650,
+    orders: 950,
+    description: "Korean-style maki rolls with vegetables and seaweed.",
+    tags: ["KR Korean", "⏱️ 10–15 mins", "🍙 Rice Rolls"],
+    spicy: "Not spicy",
+    addons: [
+      { name: "Extra Kimbap", description: "4 pieces", price: 40 },
+      { name: "Pickled Radish", description: "Danmuji", price: 15 },
+      { name: "Korean Tea", description: "Boricha", price: 20 },
+      { name: "Sesame Oil", description: "Dipping sauce", price: 10 }
+    ]
+  },
 
-    {
-        id: 2,
-        name: "Poke Bowl",
-        price: 129,
-        category: ["best"],
-        image: "src/PokeBowl.jpeg",
-        rating: 4.7,
-        reviews: 920,
-        orders: 1500,
-        description: "Savory fried rice with spicy kimchi, veggies, and fried egg.",
-        tags: ["🌶 Spicy", "⏱ 15–20 mins", "🔥 Popular"],
-        spicy: "🌶 Spicy · Fried Rice",
-        addons: [
-            { name: "Extra Kimchi", description: "Fermented cabbage", price: 30 },
-            { name: "Extra Egg", description: "Sunny side up", price: 25 },
-            { name: "Pork Belly", description: "Grilled slices", price: 50 }
-        ]
-    },
+  // ============================
+  // 🔥 SIZZLING
+  // ============================
+  {
+    id: 7,
+    name: "Pork Sisig",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/Pork_Sisig.jpeg",
+    rating: 4.6,
+    reviews: 300,
+    orders: 800,
+    description: "Classic pork sisig sizzling plate.",
+    tags: ["Filipino", "Sizzling"],
+    spicy: "Mild",
+    addons: []
+  },
+  {
+    id: 8,
+    name: "Pepper Steak",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/PepperSteak.jpeg",
+    rating: 4.5,
+    reviews: 250,
+    orders: 700,
+    description: "Beef steak with pepper sauce.",
+    tags: ["Beef", "Sizzling"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 9,
+    name: "Kimchi Pork",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/Kimchi_Pork.jpeg",
+    rating: 4.6,
+    reviews: 270,
+    orders: 730,
+    description: "Pork cooked with Korean kimchi.",
+    tags: ["KR Korean", "Spicy"],
+    spicy: "Medium",
+    addons: []
+  },
+  {
+    id: 10,
+    name: "Teriyaki",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/TeriyakiSizzling.jpeg",
+    rating: 4.5,
+    reviews: 260,
+    orders: 720,
+    description: "Japanese-style sweet teriyaki dish.",
+    tags: ["Japanese", "Sweet"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 11,
+    name: "Tonkatsu",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/Porkchop.jpeg",
+    rating: 4.5,
+    reviews: 230,
+    orders: 680,
+    description: "Crispy pork cutlet with sauce.",
+    tags: ["Japanese", "Fried"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 12,
+    name: "Spicy Garlic Shrimp",
+    category: ["sizzling"],
+    price: 129,
+    image: "src/SpicyGarlicShrimp.jpeg",
+    rating: 4.7,
+    reviews: 310,
+    orders: 820,
+    description: "Shrimp sautéed with spicy garlic sauce.",
+    tags: ["Seafood", "Garlic", "Spicy"],
+    spicy: "Hot",
+    addons: []
+  },
 
-    {
-        id: 3,
-        name: "Stirfried Fishcake (Sweet & Spicy)",
-        price: 100,
-        category: ["best"],
-        image: "src/Stirfried_Fishcake.jpeg",
-        rating: 4.5,
-        reviews: 710,
-        orders: 1000,
-        description: "Korean stirfried eomuk in spicy sauce.",
-        tags: ["🌶️ Spicy", "⏱ 15–20 mins", "🇰🇷 Korean"],
-        spicy: "🌶 Spicy · Korean Street Food",
-        addons: [
-            { name: "Extra Fishcake", description: "100g", price: 40 },
-            { name: "Spicy Level", description: "Adjustable", price: 0 },
-            { name: "Rice Cakes", description: "Tteokbokki style", price: 35 },
-            { name: "Kimchi", description: "Side dish", price: 25 }
-        ]
-    },
-
-    {
-        id: 11,
-        name: "Kimbap",
-        category: ["sushi"],
-        price: 89,
-        image: "src/Kimbap.jpeg",
-        rating: 4.4,
-        reviews: 650,
-        orders: 950,
-        description: "Korean-style maki rolls with vegetables and seaweed.",
-        tags: ["🇰🇷 Korean", "⏱ 10–15 mins", "🍱 Light meal"],
-        spicy: "🇰🇷 Korean · Rice Rolls",
-        addons: [
-            { name: "Extra Kimbap", description: "4 pieces", price: 40 },
-            { name: "Pickled Radish", description: "Danmuji", price: 15 },
-            { name: "Korean Tea", description: "Boricha", price: 20 },
-            { name: "Sesame Oil", description: "Dipping sauce", price: 10 }
-        ]
-    },
+  // ============================
+  // ⭐ BEST SELLER
+  // ============================
+  {
+    id: 13,
+    name: "Pokebowl",
+    category: ["best-seller"],
+    price: 129,
+    image: "src/Pokebowl.jpeg",
+    rating: 4.8,
+    reviews: 500,
+    orders: 1200,
+    description: "Hawaiian-style poke bowl.",
+    tags: ["Fresh", "Healthy"],
+    spicy: "Optional",
+    addons: []
+  },
+  {
+    id: 14,
+    name: "Bibimbap",
+    category: ["best-seller"],
+    price: 129,
+    image: "src/Bibimbap.jpeg",
+    rating: 4.8,
+    reviews: 540,
+    orders: 1300,
+    description: "Korean mixed rice with vegetables and meat.",
+    tags: ["KR Korean", "Rice bowl"],
+    spicy: "Optional",
+    addons: []
+  },
+  {
+    id: 15,
+    name: "Stirfried Fishcake Sweet & Spicy",
+    category: ["best-seller"],
+    price: 100,
+    image: "src/Stirfried_Fishcake.jpeg",
+    rating: 4.6,
+    reviews: 300,
+    orders: 900,
+    description: "Korean fishcake stir-fry with sweet & spicy sauce.",
+    tags: ["KR Korean", "Sweet & Spicy"],
+    spicy: "Medium",
+    addons: []
+  },
+  {
+    id: 16,
+    name: "Porkchop w/ Rice & Salad",
+    category: ["best-seller"],
+    price: 79,
+    image: "src/Porkchop.jpeg",
+    rating: 4.4,
+    reviews: 250,
+    orders: 850,
+    description: "Seasoned porkchop served with rice and salad.",
+    tags: ["Filipino", "Meal"],
+    spicy: "Not spicy",
+    addons: []
+  },
+  {
+    id: 17,
+    name: "Hot & Spicy Chicken w/ Drinks",
+    category: ["best-seller"],
+    price: 110,
+    image: "src/H&S_Chicken.jpeg",
+    rating: 4.5,
+    reviews: 320,
+    orders: 910,
+    description: "Spicy chicken meal with drink included.",
+    tags: ["Chicken", "Spicy"],
+    spicy: "Hot",
+    addons: []
+  }
+];
 
     // You can add the rest of your items here exactly the same way...
-];
+
 
 // =====================================================
 // RENDER PRODUCTS
