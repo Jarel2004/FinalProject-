@@ -1,8 +1,17 @@
 <?php
+session_start();
 require "config.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 
+$user_id = $_SESSION["user_id"] ?? null;
+require "config.php";
+
+$data = json_decode(file_get_contents("php://input"), true);
+// In save_order.php
+$address = mysqli_real_escape_string($conn, $data["address"] ?? '');
+$subtotal = floatval($data["subtotal"] ?? 0);
+// ... validate other fields
 $user_id = $_SESSION["user_id"] ?? null;
 $address = $data["address"];
 $subtotal = $data["subtotal"];
@@ -43,4 +52,8 @@ foreach ($items as $item) {
 }
 
 echo json_encode(["status" => "SUCCESS", "order_id" => $order_id]);
+if (!$user_id) {
+    echo json_encode(["status" => "ERROR", "message" => "User not logged in"]);
+    exit();
+}
 ?>

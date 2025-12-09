@@ -325,6 +325,7 @@ function showToast(msg) {
 =========================================================*/
 document.addEventListener("DOMContentLoaded", initCartPage);
 
+// Remove or fix this section at the end of cart.js:
 fetch("php/save_order.php", {
     method: "POST",
     headers: {"Content-Type": "application/json"},

@@ -9,6 +9,7 @@ USE kfoods_db;
 -- USERS TABLE  (login / signup)
 -- ============================================================
 
+-- In database.sql, update users table:
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -18,7 +19,6 @@ CREATE TABLE users (
     mobile VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 -- ============================================================
 -- PRODUCTS TABLE  (menu items)
 -- ============================================================
@@ -107,4 +107,5 @@ INSERT INTO users (first_name, last_name, email, password, mobile)
 VALUES ('Admin', 'Account', 'admin@kfoods.com', 
         '$2y$10$Jfj3ONh7l1kSZp2PpQlfre5aQkzY0aBSg1XWloZzv7bU07kE1Zu12', 
         '0000000000');
-
+-- Add to users table in database.sql:
+ALTER TABLE users ADD COLUMN address VARCHAR(300) AFTER mobile;

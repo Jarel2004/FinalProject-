@@ -365,7 +365,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <div class="form-group">
             <label>Date of Birth<span class="required">*</span></label>
             <div class="date-group">
-              <select id="month" required>
+              <select name="month" id="month" required>
                 <option value="">Month</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -380,7 +380,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <option value="11">November</option>
                 <option value="12">December</option>
               </select>
-              <select id="day" required>
+              <select name="day" id="day" required>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -427,6 +427,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               <input
                 type="tel"
                 id="mobile"
+                name="mobile"
                 placeholder=""
                 pattern="[0-9]{10}"
                 maxlength="10"
